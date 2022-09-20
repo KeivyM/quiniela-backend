@@ -3,32 +3,48 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { v4 as uuid } from 'uuid';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class UsersService {
+  constructor(
+    @InjectModel(User.name)
+    private readonly userModel: Model<User>,
+  ) {}
+
   private users: User[] = [
-    {
-      id: uuid(),
-      name: 'luis',
-      lastName: 'Roa',
-      username: 'LuisR',
-      email: 'luis@gmail.com',
-      password: '123',
-    },
+    // {
+    //   id: uuid(),
+    //   name: 'luis',
+    //   lastName: 'Roa',
+    //   username: 'LuisR',
+    //   email: 'luis@gmail.com',
+    //   password: '123',
+    // },
   ];
 
-  create(createUserDto: CreateUserDto) {
-    const user: User = {
-      id: uuid(),
-      ...createUserDto,
-    };
+  async create(createUserDto: CreateUserDto) {
+    console.log(createUserDto);
+    try {
+      createUserDto.id = uuid();
+      // createUserDto.id = uuid();
+      const user = await this.userModel.create(createUserDto);
+      return user;
+    } catch (error) {
+      return error;
+    }
+    // const user: User = {
+    //   id: uuid(),
+    //   ...createUserDto,
+    // };
 
-    this.users.push(user);
-    return user;
+    // this.users.push(user);
+    // return user;
   }
 
   findAll() {
-    return this.users;
+    return this.userModel.find();
   }
 
   findOne(id: string) {
@@ -43,7 +59,7 @@ export class UsersService {
   }
 
   remove(id: string) {
-    this.users = this.users.filter((user) => user.id !== id);
+    // this.users = this.users.filter((user) => user.id !== id);
     return `This action removes a #${id} user`;
   }
 }
