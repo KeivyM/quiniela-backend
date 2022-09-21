@@ -26,8 +26,8 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     console.log(createUserDto);
+
     try {
-      createUserDto.id = uuid();
       // createUserDto.id = uuid();
       const user = await this.userModel.create(createUserDto);
       return user;

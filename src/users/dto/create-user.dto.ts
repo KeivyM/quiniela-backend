@@ -1,16 +1,12 @@
-import { IsString, IsUUID, MinLength } from 'class-validator';
+import { IsString, MinLength } from 'class-validator';
 
 export class CreateUserDto {
-  // @IsString()
-  // @IsUUID()
-  id: string;
-
   @IsString()
-  @MinLength(2)
+  @MinLength(1)
   readonly name: string;
 
   @IsString()
-  @MinLength(2)
+  @MinLength(1)
   readonly lastName: string;
 
   @IsString()
@@ -21,5 +17,6 @@ export class CreateUserDto {
   readonly email: string;
 
   @IsString()
+  @MinLength(8)
   readonly password: string;
 }
