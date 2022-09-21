@@ -2,9 +2,11 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import * as bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { LoginUserDto } from './dto/login-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -13,34 +15,37 @@ export class UsersService {
     private readonly userModel: Model<User>,
   ) {}
 
-  private users: User[] = [
-    // {
-    //   id: uuid(),
-    //   name: 'luis',
-    //   lastName: 'Roa',
-    //   username: 'LuisR',
-    //   email: 'luis@gmail.com',
-    //   password: '123',
-    // },
-  ];
-
   async create(createUserDto: CreateUserDto) {
     console.log(createUserDto);
 
     try {
       // createUserDto.id = uuid();
-      const user = await this.userModel.create(createUserDto);
+      const { password, ...result } = createUserDto;
+      const user = await this.userModel.create({
+        ...result,
+        password: bcrypt.hashSync(password, 10),
+      });
       return user;
+      //generar JWT
     } catch (error) {
       return error;
     }
-    // const user: User = {
-    //   id: uuid(),
-    //   ...createUserDto,
-    // };
+  }
 
-    // this.users.push(user);
-    // return user;
+  async login(loginUserDto: LoginUserDto) {
+    const { password, email } = loginUserDto;
+
+    const user = await this.userModel.findOne({
+      email: email,
+    });
+
+    if (!user) return 'Email Incorrecto';
+
+    if (!bcrypt.compareSync(password, user.password))
+      return 'Password Incorrecta';
+
+    return user;
+    //generar JWT
   }
 
   findAll() {
@@ -48,10 +53,11 @@ export class UsersService {
   }
 
   findOne(id: string) {
-    const user = this.users.find((user) => user.id === id);
-    if (!user) throw new NotFoundException(`User with id '${id}' not found`);
+    return this.userModel.findById(id);
+    // const user = this.users.find((user) => user.id === id);
+    // if (!user) throw new NotFoundException(`User with id '${id}' not found`);
 
-    return user;
+    // return user;
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

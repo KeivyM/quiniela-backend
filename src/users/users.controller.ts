@@ -11,15 +11,23 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { LoginUserDto } from './dto/login-user.dto';
 
-@Controller('users')
+@Controller('auth')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
+  @Post('register')
   create(@Body() createUserDto: CreateUserDto) {
     console.log(createUserDto);
     return this.usersService.create(createUserDto);
+  }
+
+  @Post('login')
+  login(@Body() loginUserDto: LoginUserDto) {
+    console.log(loginUserDto);
+    return this.usersService.login(loginUserDto);
+    // return 'Esto debe loguear';
   }
 
   @Get()
@@ -28,7 +36,7 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseUUIDPipe) id: string) {
+  findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
 
