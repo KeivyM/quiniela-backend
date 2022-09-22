@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 import { ExtractJwt } from 'passport-jwt';
 import { User } from '../entities/user.entity';
 import { JwtPayload } from '../interfaces/jwt-payload.interface';
-import { Strategy } from 'passport-local';
+import { Strategy } from 'passport-jwt';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -20,9 +20,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: JwtPayload): Promise<User> {
-    const { email } = payload;
+    const { id } = payload;
 
-    const user = await this.userModel.findOne({ email });
+    const user = await this.userModel.findOne({ id });
 
     if (!user) throw new UnauthorizedException('Token no valido');
 

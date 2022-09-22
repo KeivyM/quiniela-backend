@@ -7,12 +7,14 @@ import {
   Param,
   Delete,
   ParseUUIDPipe,
+  UseGuards,
 } from '@nestjs/common';
 // import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 // import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { AuthService } from './auth.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
@@ -30,15 +32,23 @@ export class AuthController {
     return this.authService.login(loginUserDto);
   }
 
-  @Get()
-  findAll() {
-    return this.authService.findAll();
+  @Get('private')
+  @UseGuards(AuthGuard())
+  testingPrivateRoute() {
+    return {
+      msg: 'Ruta privada',
+    };
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(id);
-  }
+  // @Get()
+  // findAll() {
+  //   return this.authService.findAll();
+  // }
+
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.authService.findOne(id);
+  // }
 
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
