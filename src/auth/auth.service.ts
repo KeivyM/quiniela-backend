@@ -31,13 +31,13 @@ export class AuthService {
       //   ...user,
       //   token: this.getJwtToken({ email: user.email }),
       // });
-      console.log({ ...user });
+      // console.log({ ...user });
 
       // delete user.password;
 
       return {
         ...user,
-        token: this.getJwtToken({ id: user.id }),
+        token: this.getJwtToken({ email: user.email }),
       };
       //generar JWT
     } catch (error) {
@@ -56,17 +56,17 @@ export class AuthService {
 
     if (!bcrypt.compareSync(password, user.password))
       return 'Password Incorrecta';
-    // console.log(user);
+
     return {
       ...user,
-      token: this.getJwtToken({ id: user.id }),
+      token: this.getJwtToken({ email: user.email }),
     };
     //generar JWT
   }
 
   private getJwtToken(payload: JwtPayload) {
     const token = this.jwtService.sign(payload);
-    // console.log(token);
+
     return token;
   }
 
@@ -75,6 +75,7 @@ export class AuthService {
   }
 
   findOne(id: string) {
+    console.log('en auth.service', this.userModel.findById(id));
     return this.userModel.findById(id);
     // const user = this.users.find((user) => user.id === id);
     // if (!user) throw new NotFoundException(`User with id '${id}' not found`);

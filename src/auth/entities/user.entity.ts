@@ -2,6 +2,9 @@ import { SchemaFactory, Schema, Prop } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 @Schema()
 export class User extends Document {
+  @Prop()
+  id: string;
+
   @Prop({
     isRequired: true,
   })
