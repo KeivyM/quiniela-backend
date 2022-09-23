@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { User } from 'src/auth/entities/user.entity';
 import { CreateQuinielaDto } from './dto/create-quiniela.dto';
 import { UpdateQuinielaDto } from './dto/update-quiniela.dto';
 import { Quiniela } from './entities/quiniela.entity';
@@ -12,24 +13,22 @@ export class QuinielaService {
     private readonly quinielaModel: Model<Quiniela>,
   ) {}
 
-  async create(createQuinielaDto: CreateQuinielaDto) {
+  async create(createQuinielaDto: CreateQuinielaDto, user: User) {
     try {
       const { ...result } = createQuinielaDto;
-      console.log(result);
-      this.quinielaModel.create({ ...result });
-      // const user = await this.userModel.create({
-      //   ...result,
-      //   password: bcrypt.hashSync(password, 10),
-      // });
+      // result.user = user._id;
 
-      return createQuinielaDto;
+      const newQuiniela = await this.quinielaModel.create(result);
+
+      return newQuiniela;
     } catch (error) {
       return error;
     }
   }
 
-  findAll() {
-    return `This action returns all quiniela`;
+  async findAll() {
+    const quinielas = this.quinielaModel.find();
+    return quinielas;
   }
 
   findOne(id: number) {

@@ -28,7 +28,7 @@ export class AuthService {
 
       return {
         ...user,
-        token: this.getJwtToken({ email: user.email }),
+        token: this.getJwtToken({ id: user.id }),
       };
       //generar JWT
     } catch (error) {
@@ -47,17 +47,15 @@ export class AuthService {
 
     if (!bcrypt.compareSync(password, user.password))
       return 'Password Incorrecta';
-
     return {
       ...user,
-      token: this.getJwtToken({ email: user.email }),
+      token: this.getJwtToken({ id: user._id.toString() }),
     };
     //generar JWT
   }
 
   private getJwtToken(payload: JwtPayload) {
     const token = this.jwtService.sign(payload);
-
     return token;
   }
 

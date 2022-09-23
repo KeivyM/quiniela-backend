@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import mongoose from 'mongoose';
+import { User } from '../../auth/entities/user.entity';
 
 @Schema()
 export class Quiniela extends Document {
@@ -7,21 +9,22 @@ export class Quiniela extends Document {
   id: string;
 
   @Prop({
-    isRequired: true,
-    unique: true,
+    required: true,
     index: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
   })
-  idUser: string;
+  user: User;
 
   @Prop({
-    isRequired: true,
+    required: true,
   })
   phase: string; // fase de grupos, octavos de final, cuartos de final, semi-finales, tercer puesto y finals
 
   @Prop({
-    isRequired: true,
+    required: true,
   })
-  prediction: [];
+  prediction: string[];
 }
 
 export const QuinielaSchema = SchemaFactory.createForClass(Quiniela);

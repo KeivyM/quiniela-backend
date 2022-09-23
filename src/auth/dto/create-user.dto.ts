@@ -1,4 +1,4 @@
-import { IsEmail, IsString, MinLength } from 'class-validator';
+import { IsArray, IsEmail, IsString, MinLength } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
@@ -20,4 +20,7 @@ export class CreateUserDto {
   @IsString()
   @MinLength(8)
   readonly password: string;
+
+  // @IsArray()
+  // readonly quiniela: string[];
 }

@@ -3,6 +3,7 @@ import { QuinielaService } from './quiniela.service';
 import { QuinielaController } from './quiniela.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Quiniela, QuinielaSchema } from './entities/quiniela.entity';
+// import { PassportModule } from '@nestjs/passport';
 
 @Module({
   controllers: [QuinielaController],
@@ -12,6 +13,7 @@ import { Quiniela, QuinielaSchema } from './entities/quiniela.entity';
     MongooseModule.forFeature([
       { name: Quiniela.name, schema: QuinielaSchema }, //esto arreglo el error
     ]),
+    // PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
 })
 export class QuinielaModule {}
