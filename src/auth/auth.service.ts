@@ -1,9 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-// import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
-import { v4 as uuid } from 'uuid';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { LoginUserDto } from './dto/login-user.dto';
@@ -27,13 +25,6 @@ export class AuthService {
         ...result,
         password: bcrypt.hashSync(password, 10),
       });
-      // console.log('Auth.Service', {
-      //   ...user,
-      //   token: this.getJwtToken({ email: user.email }),
-      // });
-      // console.log({ ...user });
-
-      // delete user.password;
 
       return {
         ...user,

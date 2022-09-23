@@ -7,6 +7,8 @@ import { User, UserSchema } from './entities/user.entity';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { QuinielaModule } from '../quiniela/quiniela.module';
+import { QuinielaService } from '../quiniela/quiniela.service';
 
 @Module({
   controllers: [AuthController],
