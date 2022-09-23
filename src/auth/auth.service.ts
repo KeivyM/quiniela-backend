@@ -7,6 +7,7 @@ import { Model } from 'mongoose';
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { JwtService } from '@nestjs/jwt';
+import { AddIdQuinielaDto } from './dto/add-id-quiniela.dto';
 
 @Injectable()
 export class AuthService {
@@ -28,7 +29,7 @@ export class AuthService {
 
       return {
         ...user,
-        token: this.getJwtToken({ id: user.id }),
+        token: this.getJwtToken({ id: user._id.toString() }),
       };
       //generar JWT
     } catch (error) {
@@ -64,13 +65,16 @@ export class AuthService {
   }
 
   findOne(id: string) {
-    console.log('en auth.service', this.userModel.findById(id));
+    // console.log(id);
     return this.userModel.findById(id);
-    // const user = this.users.find((user) => user.id === id);
-    // if (!user) throw new NotFoundException(`User with id '${id}' not found`);
-
-    // return user;
   }
+
+  // addQuiniela(id, idQuiniela: AddIdQuinielaDto) {
+  //   // this.userModel.findOneAndUpdate()
+  //   //puedo mostrar el id en consola
+  //   console.log(idQuiniela, id);
+  //   return 'Esto agrega un id de la quiniela creada, en el array del user';
+  // }
 
   // update(id: number, updateUserDto: UpdateUserDto) {
   //   return `This action updates a #${id} user`;

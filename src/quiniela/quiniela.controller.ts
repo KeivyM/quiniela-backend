@@ -32,7 +32,7 @@ export class QuinielaController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.quinielaService.findOne(+id);
+    return this.quinielaService.findOne(id);
   }
 
   @Patch(':id')

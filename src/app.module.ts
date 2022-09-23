@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { QuinielaModule } from './quiniela/quiniela.module';
+import { PredictionModule } from './prediction/prediction.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { QuinielaModule } from './quiniela/quiniela.module';
     // UsersModule,
     AuthModule,
     QuinielaModule,
+    PredictionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

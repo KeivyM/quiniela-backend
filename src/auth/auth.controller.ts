@@ -20,6 +20,7 @@ import { GetUser } from 'src/decorators/get-user.decorator';
 import { User } from './entities/user.entity';
 import { RawHeaders } from 'src/decorators/raw-headers.decorator';
 import { IncomingHttpHeaders } from 'http';
+import { AddIdQuinielaDto } from './dto/add-id-quiniela.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -53,14 +54,22 @@ export class AuthController {
     };
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.authService.findAll();
-  // }
+  @Get()
+  findAll() {
+    return this.authService.findAll();
+  }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.authService.findOne(id);
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    // console.log(id);
+    return this.authService.findOne(id);
+  }
+
+  // @Post('newQuiniela')
+  // @UseGuards(AuthGuard())
+  // addQuiniela(@GetUser() user: User, @Body() idQuiniela: AddIdQuinielaDto) {
+  //   // console.log('id aqui: ', user._id.toString());
+  //   return this.authService.addQuiniela(user._id.toString(), idQuiniela);
   // }
 
   // @Patch(':id')

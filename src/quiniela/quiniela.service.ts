@@ -15,10 +15,10 @@ export class QuinielaService {
 
   async create(createQuinielaDto: CreateQuinielaDto, user: User) {
     try {
-      const { ...result } = createQuinielaDto;
+      // const { ...result } = createQuinielaDto;
       // result.user = user._id;
 
-      const newQuiniela = await this.quinielaModel.create(result);
+      const newQuiniela = await this.quinielaModel.create(createQuinielaDto);
 
       return newQuiniela;
     } catch (error) {
@@ -31,8 +31,9 @@ export class QuinielaService {
     return quinielas;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} quiniela`;
+  async findOne(id: string) {
+    const quiniela = await this.quinielaModel.findById(id);
+    return quiniela;
   }
 
   update(id: number, updateQuinielaDto: UpdateQuinielaDto) {
