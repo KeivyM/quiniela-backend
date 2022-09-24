@@ -1,26 +1,31 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import mongoose from 'mongoose';
-import { User } from '../../auth/entities/user.entity';
-import { Quiniela } from 'src/quiniela/entities/quiniela.entity';
+import { Quiniela } from '../../quiniela/entities/quiniela.entity';
 
 @Schema()
 export class Prediction extends Document {
   @Prop()
   id: string;
 
-  @Prop({
-    required: true,
-    index: true,
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Quiniela',
-  })
-  quiniela: Quiniela;
+  @Prop()
+  userId: string;
+
+  // @Prop({
+  //   required: true,
+  //   index: true,
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Quiniela',
+  // })
+  // quiniela: Quiniela;
+
+  @Prop()
+  quiniela: string;
 
   @Prop({
     required: true,
   })
-  idPartido: string; // cambiar nombre, verificar si hay un endpoint en la api que obtenga cada partido
+  matchId: string; //  verificar si hay un endpoint en la api que obtenga cada partido
 
   @Prop({
     required: true,

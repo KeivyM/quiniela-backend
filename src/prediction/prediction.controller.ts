@@ -12,15 +12,20 @@ import { PredictionService } from './prediction.service';
 import { CreatePredictionDto } from './dto/create-prediction.dto';
 import { UpdatePredictionDto } from './dto/update-prediction.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/decorators/get-user.decorator';
+import { User } from 'src/auth/entities/user.entity';
 
 @Controller('prediction')
 export class PredictionController {
   constructor(private readonly predictionService: PredictionService) {}
 
-  @Post()
+  @Post('create')
   @UseGuards(AuthGuard('jwt'))
-  create(@Body() createPredictionDto: CreatePredictionDto) {
-    return this.predictionService.create(createPredictionDto);
+  create(
+    @Body() createPredictionDto: CreatePredictionDto,
+    @GetUser() user: User,
+  ) {
+    return this.predictionService.create(createPredictionDto, user);
   }
 
   @Get()
