@@ -3,7 +3,6 @@ import { PredictionService } from './prediction.service';
 import { PredictionController } from './prediction.controller';
 import { Prediction, PredictionSchema } from './entities/prediction.entity';
 import { MongooseModule } from '@nestjs/mongoose';
-// import { Quiniela, QuinielaSchema } from './entities/quiniela.entity';
 
 @Module({
   controllers: [PredictionController],

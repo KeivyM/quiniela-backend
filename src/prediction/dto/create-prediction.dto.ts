@@ -5,7 +5,7 @@ export class CreatePredictionDto {
   readonly matchId: string; // id del partido
 
   @IsString()
-  readonly userId: string; // opcional
+  readonly userId: string;
 
   @IsObject()
   results: {

@@ -11,16 +11,16 @@ export class Prediction extends Document {
   @Prop()
   userId: string;
 
-  // @Prop({
-  //   required: true,
-  //   index: true,
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Quiniela',
-  // })
-  // quiniela: Quiniela;
+  @Prop({
+    // required: true,
+    index: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Quiniela',
+  })
+  quiniela: Quiniela;
 
-  @Prop()
-  quiniela: string;
+  // @Prop()
+  // quiniela: string;
 
   @Prop({
     required: true,

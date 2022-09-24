@@ -14,7 +14,7 @@ export class Quiniela extends Document {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   })
-  user: User;
+  userId: User;
 
   @Prop({
     required: true,
@@ -24,7 +24,7 @@ export class Quiniela extends Document {
   @Prop({
     required: true,
   })
-  prediction: string[];
+  prediction: [];
 }
 
 export const QuinielaSchema = SchemaFactory.createForClass(Quiniela);

@@ -11,7 +11,7 @@ import { Strategy } from 'passport-jwt';
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     @InjectModel(User.name)
-    private readonly userModel: Model<User>, // configService: ConfigService,
+    private readonly userModel: Model<User>,
   ) {
     super({
       secretOrKey: '' + process.env.JWT_SECRET,

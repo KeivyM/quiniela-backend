@@ -3,10 +3,7 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
-  Delete,
-  ParseUUIDPipe,
   Headers,
   UseGuards,
 } from '@nestjs/common';
@@ -20,7 +17,6 @@ import { GetUser } from 'src/decorators/get-user.decorator';
 import { User } from './entities/user.entity';
 import { RawHeaders } from 'src/decorators/raw-headers.decorator';
 import { IncomingHttpHeaders } from 'http';
-import { AddIdQuinielaDto } from './dto/add-id-quiniela.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -44,7 +40,6 @@ export class AuthController {
     // @RawHeaders() rawHeaders: string[],//decorador personalizado que obtiene los headers
     @Headers() headers: IncomingHttpHeaders, // decorador de nest que obtine los headers
   ) {
-    // console.log({ user });
     return {
       msg: 'Ruta privada',
       user,
@@ -61,16 +56,8 @@ export class AuthController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    // console.log(id);
     return this.authService.findOne(id);
   }
-
-  // @Post('newQuiniela')
-  // @UseGuards(AuthGuard())
-  // addQuiniela(@GetUser() user: User, @Body() idQuiniela: AddIdQuinielaDto) {
-  //   // console.log('id aqui: ', user._id.toString());
-  //   return this.authService.addQuiniela(user._id.toString(), idQuiniela);
-  // }
 
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {

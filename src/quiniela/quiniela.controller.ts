@@ -22,8 +22,6 @@ export class QuinielaController {
   @Post('create')
   @UseGuards(AuthGuard('jwt'))
   create(@Body() createQuinielaDto: CreateQuinielaDto, @GetUser() user: User) {
-    // console.log(user._id.toString());
-    // console.log('QUINIELA-CONTROLLER:', createQuinielaDto);
     return this.quinielaService.create(createQuinielaDto, user._id.toString());
   }
 

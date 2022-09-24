@@ -16,7 +16,7 @@ export class QuinielaService {
     try {
       const newQuiniela = await this.quinielaModel.create({
         ...createQuinielaDto,
-        user: id,
+        userId: id,
       });
 
       return newQuiniela;
