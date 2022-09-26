@@ -1,12 +1,12 @@
 import { IsArray, IsString } from 'class-validator';
 
 export class CreateQuinielaDto {
-  @IsString()
-  readonly user?: string;
+  // @IsString()
+  // readonly userId: string;
 
   @IsString()
   readonly phase: string;
 
   @IsArray()
-  prediction: string[];
+  predictions: Object[];
 }

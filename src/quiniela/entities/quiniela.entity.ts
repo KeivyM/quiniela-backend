@@ -25,6 +25,11 @@ export class Quiniela extends Document {
     required: true,
   })
   prediction: [];
+
+  // @Prop({
+  //   required: true,
+  // })
+  // predictions: [];
 }
 
 export const QuinielaSchema = SchemaFactory.createForClass(Quiniela);

@@ -13,6 +13,7 @@ export class QuinielaService {
   ) {}
 
   async create(createQuinielaDto: CreateQuinielaDto, id: string) {
+    // console.log(createQuinielaDto);
     try {
       const newQuiniela = await this.quinielaModel.create({
         ...createQuinielaDto,
@@ -33,6 +34,14 @@ export class QuinielaService {
   async findOne(id: string) {
     const quiniela = await this.quinielaModel.findById(id);
     return quiniela;
+  }
+
+  async addPredictionId(quinielaiId: string, predictionId: string) {
+    await this.quinielaModel.findByIdAndUpdate(quinielaiId, {
+      $push: {
+        prediction: predictionId,
+      },
+    });
   }
 
   update(id: number, updateQuinielaDto: UpdateQuinielaDto) {

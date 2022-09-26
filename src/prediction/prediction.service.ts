@@ -14,6 +14,7 @@ export class PredictionService {
   ) {}
 
   async create(createPredictionDto: CreatePredictionDto, user: User) {
+    // console.log('crear prediction: ', createPredictionDto);
     try {
       const newPrediction = await this.predictionModel.create({
         ...createPredictionDto,

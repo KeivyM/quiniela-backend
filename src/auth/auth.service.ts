@@ -60,6 +60,14 @@ export class AuthService {
     return token;
   }
 
+  async addQuinielaId(userId: string, quinielaId: string) {
+    await this.userModel.findByIdAndUpdate(userId, {
+      $push: {
+        quiniela: quinielaId,
+      },
+    });
+  }
+
   findAll() {
     return this.userModel.find();
   }
