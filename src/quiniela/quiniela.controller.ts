@@ -4,6 +4,7 @@ import {
   Post,
   Body,
   Patch,
+  Put,
   Param,
   Delete,
   UseGuards,
@@ -16,6 +17,7 @@ import { User } from 'src/auth/entities/user.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { PredictionService } from '../prediction/prediction.service';
 import { AuthService } from '../auth/auth.service';
+import { FindQuinielaDto } from './dto/find-quiniela.dto';
 
 @Controller('quiniela')
 export class QuinielaController {
@@ -56,9 +58,18 @@ export class QuinielaController {
   }
 
   @Get()
-  //@UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'))
   findAll() {
     return this.quinielaService.findAll();
+  }
+
+  @Post('find')
+  findQuinielaByPhase(@Body() objeto: FindQuinielaDto) {
+    console.log(objeto);
+    return this.quinielaService.findQuinielaByPhase(
+      objeto.userId,
+      objeto.phase,
+    );
   }
 
   @Get(':id')
@@ -66,12 +77,19 @@ export class QuinielaController {
     return this.quinielaService.findOne(id);
   }
 
-  @Patch(':id')
+  // @Get('/types/:id')
+  // test(@Param('id') id: string) {
+  //   return id;
+  // }
+
+  @Put(':id')
+  @UseGuards(AuthGuard('jwt'))
   update(
     @Param('id') id: string,
+    @GetUser() user: User,
     @Body() updateQuinielaDto: UpdateQuinielaDto,
   ) {
-    return this.quinielaService.update(id, updateQuinielaDto);
+    return this.quinielaService.update(user, updateQuinielaDto);
   }
 
   @Delete(':id')
