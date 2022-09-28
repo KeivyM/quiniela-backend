@@ -18,6 +18,7 @@ export class Quiniela extends Document {
 
   @Prop({
     required: true,
+    index: true,
   })
   phase: string; // fase de grupos, octavos de final, cuartos de final, semi-finales, tercer puesto y finals
 

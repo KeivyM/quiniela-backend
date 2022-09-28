@@ -43,7 +43,7 @@ export class PredictionController {
     @Param('id') id: string,
     @Body() updatePredictionDto: UpdatePredictionDto,
   ) {
-    return this.predictionService.update(+id, updatePredictionDto);
+    return this.predictionService.update(id, updatePredictionDto);
   }
 
   @Delete(':id')

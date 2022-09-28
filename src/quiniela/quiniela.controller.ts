@@ -71,7 +71,7 @@ export class QuinielaController {
     @Param('id') id: string,
     @Body() updateQuinielaDto: UpdateQuinielaDto,
   ) {
-    return this.quinielaService.update(+id, updateQuinielaDto);
+    return this.quinielaService.update(id, updateQuinielaDto);
   }
 
   @Delete(':id')

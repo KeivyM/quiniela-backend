@@ -6,6 +6,10 @@ import { Quiniela, QuinielaSchema } from './entities/quiniela.entity';
 // import { PassportModule } from '@nestjs/passport';
 import { PredictionModule } from '../prediction/prediction.module';
 import { AuthModule } from '../auth/auth.module';
+import {
+  Prediction,
+  PredictionSchema,
+} from '../prediction/entities/prediction.entity';
 
 @Module({
   controllers: [QuinielaController],
@@ -15,7 +19,8 @@ import { AuthModule } from '../auth/auth.module';
     PredictionModule,
     AuthModule,
     MongooseModule.forFeature([
-      { name: Quiniela.name, schema: QuinielaSchema }, //esto arreglo el error
+      { name: Quiniela.name, schema: QuinielaSchema },
+      { name: Prediction.name, schema: PredictionSchema }, //esto arreglo el error
     ]),
     // PassportModule.register({ defaultStrategy: 'jwt' }),
   ],

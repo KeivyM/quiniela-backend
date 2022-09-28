@@ -34,8 +34,11 @@ export class PredictionService {
     return `This action returns a #${id} prediction`;
   }
 
-  update(id: number, updatePredictionDto: UpdatePredictionDto) {
-    return `This action updates a #${id} prediction`;
+  async update(id: string, updatePredictionDto: UpdatePredictionDto) {
+    console.log(updatePredictionDto.matchId);
+    const prediction = await this.predictionModel.findById(id);
+
+    return `This action updates a #${prediction} prediction  for ${updatePredictionDto}`;
   }
 
   remove(id: number) {

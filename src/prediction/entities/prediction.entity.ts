@@ -24,6 +24,7 @@ export class Prediction extends Document {
 
   @Prop({
     required: true,
+    index: true,
   })
   matchId: string; //  verificar si hay un endpoint en la api que obtenga cada partido
 
