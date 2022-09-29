@@ -14,7 +14,6 @@ export class PredictionService {
   ) {}
 
   async create(createPredictionDto: CreatePredictionDto, user: User) {
-    // console.log('crear prediction: ', createPredictionDto);
     try {
       const newPrediction = await this.predictionModel.create({
         ...createPredictionDto,
@@ -34,8 +33,14 @@ export class PredictionService {
     return `This action returns a #${id} prediction`;
   }
 
+  async getAllByUserId(id: string) {
+    const predictionsByUser = await this.predictionModel.find({ userId: id });
+    console.log(predictionsByUser.length);
+    return predictionsByUser;
+  }
+
   async update(id: string, updatePredictionDto: UpdatePredictionDto) {
-    console.log(updatePredictionDto.matchId);
+    // console.log(updatePredictionDto.matchId);
     const prediction = await this.predictionModel.findById(id);
 
     return `This action updates a #${prediction} prediction  for ${updatePredictionDto}`;

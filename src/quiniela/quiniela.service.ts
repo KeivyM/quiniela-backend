@@ -17,7 +17,6 @@ export class QuinielaService {
   ) {}
 
   async create(createQuinielaDto: CreateQuinielaDto, id: string) {
-    // console.log(createQuinielaDto);
     try {
       const newQuiniela = await this.quinielaModel.create({
         ...createQuinielaDto,
@@ -36,12 +35,11 @@ export class QuinielaService {
   }
 
   async findQuinielaByPhase(userId: string, phase: string) {
-    // console.log({ userId, phase });
     const quiniela = await this.quinielaModel.findOne({
       userId: userId,
       phase: phase,
     });
-    // console.log(quiniela);
+
     return quiniela;
   }
 
@@ -60,21 +58,12 @@ export class QuinielaService {
 
   async update(user: User, updateQuinielaDto: UpdateQuinielaDto) {
     const userId = user._id.toString();
-    // const quiniela = await this.quinielaModel.findById(id);
-    console.log(user._id.toString());
-    // for (const prediction of quiniela.prediction) {
-    //   const PredictionupdateData = updateQuinielaDto.predictions.find(pre => pre)
-    //   await this.predictionModel.findByIdAndUpdate(prediction, {})
-    // }
 
     for (const predictionUpdate of updateQuinielaDto.predictions) {
-      console.log('AQUI:', predictionUpdate);
-      // console.log('ID del usuario:', id);
       const prediction = await this.predictionModel.findOne({
-        userId: userId, //debo pasarle el id del usuario
+        userId: userId,
         matchId: predictionUpdate.matchId,
       });
-      console.log('PREDICTION:', prediction);
 
       if (prediction) {
         await this.predictionModel.findByIdAndUpdate(prediction._id, {
@@ -82,7 +71,7 @@ export class QuinielaService {
         });
       }
     }
-    return `This action updates a #${'quiniela'} quiniela`;
+    return `This action updates a quiniela`;
   }
 
   remove(id: number) {

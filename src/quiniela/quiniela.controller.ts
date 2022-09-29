@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Put,
   Param,
   Delete,
@@ -52,9 +51,6 @@ export class QuinielaController {
         registration._id.toString(),
       );
     });
-    //el metodo de crear predicciones debe recibir un array de objetos y crear un registro en la base de datos con cada objeto
-    // this.predictionService.create(obj, user);
-    // return this.quinielaService.create(createQuinielaDto, user._id.toString());
   }
 
   @Get()

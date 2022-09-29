@@ -1,8 +1,7 @@
 import { IsObject, IsString } from 'class-validator';
-
 export class CreatePredictionDto {
   @IsString()
-  readonly matchId?: string; // id del partido
+  readonly matchId?: string;
 
   @IsString()
   readonly userId?: string;

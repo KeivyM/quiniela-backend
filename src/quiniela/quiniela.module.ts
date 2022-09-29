@@ -20,7 +20,7 @@ import {
     AuthModule,
     MongooseModule.forFeature([
       { name: Quiniela.name, schema: QuinielaSchema },
-      { name: Prediction.name, schema: PredictionSchema }, //esto arreglo el error
+      { name: Prediction.name, schema: PredictionSchema },
     ]),
     // PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
