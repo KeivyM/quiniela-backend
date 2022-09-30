@@ -43,6 +43,9 @@ export class User extends Document {
 
   @Prop()
   quiniela: [];
+
+  @Prop()
+  points: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

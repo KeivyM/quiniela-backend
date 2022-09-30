@@ -8,6 +8,7 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { JwtService } from '@nestjs/jwt';
 import { AddIdQuinielaDto } from './dto/add-id-quiniela.dto';
+import { AddPointsDto } from './dto/add-points.dto';
 
 @Injectable()
 export class AuthService {
@@ -24,6 +25,7 @@ export class AuthService {
 
       const user = await this.userModel.create({
         ...result,
+        points: 0,
         password: bcrypt.hashSync(password, 10),
       });
 
@@ -72,6 +74,24 @@ export class AuthService {
     await this.userModel.findByIdAndUpdate(userId, {
       $push: {
         quiniela: quinielaId,
+      },
+    });
+  }
+
+  async addPoints(obj: AddPointsDto) {
+    const user = await this.userModel.findByIdAndUpdate(obj.userId, {
+      $inc: {
+        points: obj.points,
+      },
+    });
+
+    return user;
+  }
+
+  resetPoints({ userId }) {
+    return this.userModel.findByIdAndUpdate(userId, {
+      $set: {
+        points: 0,
       },
     });
   }

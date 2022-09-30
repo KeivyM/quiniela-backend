@@ -43,6 +43,14 @@ export class QuinielaService {
     return quiniela;
   }
 
+  async findAllQuinielasByUser(userId: string) {
+    const quinielas = await this.quinielaModel.find({
+      userId: userId,
+    });
+
+    return quinielas;
+  }
+
   async findOne(id: string) {
     const quiniela = await this.quinielaModel.findById(id);
     return quiniela;

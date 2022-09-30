@@ -5,10 +5,12 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { QuinielaModule } from './quiniela/quiniela.module';
 import { PredictionModule } from './prediction/prediction.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost:27017/quinielaApp'),
+    ScheduleModule.forRoot(),
     AuthModule,
     QuinielaModule,
     PredictionModule,

@@ -17,6 +17,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { PredictionService } from '../prediction/prediction.service';
 import { AuthService } from '../auth/auth.service';
 import { FindQuinielaDto } from './dto/find-quiniela.dto';
+import { FindQuinielaByUserIdDto } from './dto/findAllByUserId-quiniela.dto';
 
 @Controller('quiniela')
 export class QuinielaController {
@@ -57,6 +58,11 @@ export class QuinielaController {
   @UseGuards(AuthGuard('jwt'))
   findAll() {
     return this.quinielaService.findAll();
+  }
+
+  @Post('findQuinielasByUser')
+  findAllQuinielasByUser(@Body() objeto: FindQuinielaByUserIdDto) {
+    return this.quinielaService.findAllQuinielasByUser(objeto.userId);
   }
 
   @Post('find')

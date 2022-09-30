@@ -17,6 +17,7 @@ import { GetUser } from 'src/decorators/get-user.decorator';
 import { User } from './entities/user.entity';
 import { RawHeaders } from 'src/decorators/raw-headers.decorator';
 import { IncomingHttpHeaders } from 'http';
+import { AddPointsDto } from './dto/add-points.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -63,6 +64,16 @@ export class AuthController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.authService.findOne(id);
+  }
+
+  @Post('addPoints')
+  addPoints(@Body() body: AddPointsDto) {
+    return this.authService.addPoints(body);
+  }
+
+  @Post('resetPoints')
+  resetPoints(@Body() body) {
+    return this.authService.resetPoints(body);
   }
 
   // @Patch(':id')

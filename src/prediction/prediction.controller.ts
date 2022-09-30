@@ -41,7 +41,7 @@ export class PredictionController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.predictionService.findOne(+id);
+    return this.predictionService.findOne(id);
   }
 
   @Patch(':id')
