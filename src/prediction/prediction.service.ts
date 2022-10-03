@@ -36,7 +36,7 @@ export class PredictionService {
 
   //UN CRON que se ejecute cada media noche y compare las predicciones de cada user y le de los puntos
 
-  @Cron(CronExpression.EVERY_10_SECONDS)
+  @Cron(CronExpression.EVERY_30_SECONDS)
   async handleCron() {
     const dataDePrueba = [
       {

@@ -9,6 +9,8 @@ import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { JwtService } from '@nestjs/jwt';
 import { AddIdQuinielaDto } from './dto/add-id-quiniela.dto';
 import { AddPointsDto } from './dto/add-points.dto';
+import { Quiniela } from '../quiniela/entities/quiniela.entity';
+import { Prediction } from '../prediction/entities/prediction.entity';
 
 @Injectable()
 export class AuthService {
@@ -17,6 +19,12 @@ export class AuthService {
     private readonly userModel: Model<User>,
 
     private readonly jwtService: JwtService,
+
+    @InjectModel(Quiniela.name)
+    private readonly quinielaModel: Model<Quiniela>,
+
+    @InjectModel(Prediction.name)
+    private readonly predictionModel: Model<Prediction>,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -46,10 +54,10 @@ export class AuthService {
       email: email,
     });
 
-    if (!user) return 'Email Incorrecto';
+    if (!user) return 'Correo Incorrecto';
 
     if (!bcrypt.compareSync(password, user.password))
-      return 'Password Incorrecta';
+      return 'Contraseña Incorrecta';
     return {
       ...user,
       token: this.getJwtToken({ id: user._id.toString() }),
@@ -62,7 +70,6 @@ export class AuthService {
       ...user,
       token: this.getJwtToken({ id: user._id.toString() }),
     };
-    //ge
   }
 
   private getJwtToken(payload: JwtPayload) {
@@ -116,8 +123,31 @@ export class AuthService {
   //   return `This action updates a #${id} user`;
   // }
 
-  remove(id: string) {
+  async remove(id: string) {
     // this.users = this.users.filter((user) => user.id !== id);
+    try {
+      const user = await this.userModel.findById(id);
+      console.log(user);
+
+      for (const quiniela of user.quiniela) {
+        console.log(quiniela);
+        await this.quinielaModel.findByIdAndDelete(quiniela);
+      }
+      const predictions = await this.predictionModel.find({ userId: id });
+      for (const prediction of predictions) {
+        console.log(prediction);
+
+        await this.predictionModel.findByIdAndDelete(prediction._id);
+      }
+
+      await this.userModel.findByIdAndDelete(user._id);
+
+      //eliminar quinielas relacionadas
+      //eliminar predicciones relacionadas
+    } catch (error) {
+      return `A user with id "${error.value}" not exits`;
+    }
+
     return `This action removes a #${id} user`;
   }
 }

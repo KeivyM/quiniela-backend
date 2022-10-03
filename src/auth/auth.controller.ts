@@ -6,6 +6,7 @@ import {
   Param,
   Headers,
   UseGuards,
+  Delete,
 } from '@nestjs/common';
 // import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -81,8 +82,8 @@ export class AuthController {
   //   return this.usersService.update(+id, updateUserDto);
   // }
 
-  // @Delete(':id')
-  // remove(@Param('id', ParseUUIDPipe) id: string) {
-  //   return this.usersService.remove(id);
-  // }
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.authService.remove(id);
+  }
 }
