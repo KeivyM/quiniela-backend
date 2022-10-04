@@ -123,11 +123,14 @@ export class AuthService {
   //   return `This action updates a #${id} user`;
   // }
 
-  async remove(id: string) {
-    // this.users = this.users.filter((user) => user.id !== id);
+  async remove(id: string, { password }) {
     try {
       const user = await this.userModel.findById(id);
       console.log(user);
+
+      if (!bcrypt.compareSync(password, user.password))
+        return console.log('contraseña incorrecta');
+      // throw new Error('Contraseña Incorrecta');
 
       for (const quiniela of user.quiniela) {
         console.log(quiniela);
@@ -141,7 +144,7 @@ export class AuthService {
       }
 
       await this.userModel.findByIdAndDelete(user._id);
-
+      console.log('elliminado');
       //eliminar quinielas relacionadas
       //eliminar predicciones relacionadas
     } catch (error) {
