@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { QuinielaModule } from './quiniela/quiniela.module';
 import { PredictionModule } from './prediction/prediction.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { PlayerModule } from './player/player.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     AuthModule,
     QuinielaModule,
     PredictionModule,
+    PlayerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
