@@ -7,6 +7,7 @@ import { Player, PlayerSchema } from './entities/player.entity';
 @Module({
   controllers: [PlayerController],
   providers: [PlayerService],
+  exports: [PlayerService],
   imports: [
     MongooseModule.forFeature([{ name: Player.name, schema: PlayerSchema }]),
   ],
