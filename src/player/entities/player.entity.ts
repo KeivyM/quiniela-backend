@@ -19,7 +19,7 @@ export class Player extends Document {
   @Prop({
     required: true,
   })
-  name: string;
+  playerName: string;
 
   @Prop({
     required: true,

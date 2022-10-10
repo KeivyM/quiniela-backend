@@ -51,9 +51,4 @@ export class PredictionController {
   ) {
     return this.predictionService.update(id, updatePredictionDto);
   }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.predictionService.remove(+id);
-  }
 }

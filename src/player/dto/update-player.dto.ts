@@ -4,7 +4,7 @@ import { CreatePlayerDto } from './create-player.dto';
 
 export class UpdatePlayerDto extends PartialType(CreatePlayerDto) {
   @IsString()
-  name?: string;
+  playerName?: string;
 
   @IsNumber()
   goals?: number;
