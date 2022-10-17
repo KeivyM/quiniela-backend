@@ -54,7 +54,7 @@ export class PredictionService {
     }
   }
 
-  @Cron(CronExpression.EVERY_30_SECONDS) // cambiar a EVERY_DAY_AT_MIDNIGHT
+  @Cron(CronExpression.EVERY_10_HOURS) // cambiar a EVERY_DAY_AT_MIDNIGHT
   async handleCron() {
     // const matches = [
     //   {

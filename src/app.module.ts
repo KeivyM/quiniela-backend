@@ -8,9 +8,14 @@ import { PredictionModule } from './prediction/prediction.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { PlayerModule } from './player/player.module';
 
+//mongodb+srv://mern_user:DYPiFDj4iPDXLznM@cluster0.frmzguy.mongodb.net/Cluster0?authSource=admin&replicaSet=atlas-95y0us-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true
+//mongodb://localhost:27017/quinielaApp
+
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/quinielaApp'),
+    MongooseModule.forRoot(
+      'mongodb+srv://mern_user:DYPiFDj4iPDXLznM@cluster0.frmzguy.mongodb.net/Cluster0?authSource=admin&replicaSet=atlas-95y0us-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true',
+    ),
     ScheduleModule.forRoot(),
     AuthModule,
     QuinielaModule,
