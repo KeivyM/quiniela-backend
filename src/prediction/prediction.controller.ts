@@ -28,9 +28,14 @@ export class PredictionController {
     return this.predictionService.create(createPredictionDto, user);
   }
 
-  @Get()
-  findAll() {
-    return this.predictionService.findAll();
+  @Get('getMatchesFromApi')
+  getMatchesFromApi() {
+    return this.predictionService.getMatchesFromApi();
+  }
+
+  @Get('getPlayersFromApi')
+  getPlayersFromApi() {
+    return this.predictionService.getPlayersFromApi();
   }
 
   @Get('findAll/:id')
