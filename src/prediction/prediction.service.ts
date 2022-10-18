@@ -751,7 +751,7 @@ export class PredictionService {
 
     await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/schedule?api_key=c5LOkPHn9mDlm00W&leagueId=13014',
+        'http://api.isportsapi.com/sport/football/schedule?api_key=nqt7nbnv0VyRFjJf&leagueId=13014',
       )
       .then((res) => (matches = res.data.data)); //cambiar leagueId a 1572
 
@@ -2304,7 +2304,7 @@ export class PredictionService {
 
     await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/topscorer?api_key=EGlD1j0CeqDo3hcr&leagueId=13014',
+        'http://api.isportsapi.com/sport/football/topscorer?api_key=nqt7nbnv0VyRFjJf&leagueId=13014',
       )
       .then((res) => (players = res.data.data)); //cambiar leagueId a 1572
 
@@ -2338,7 +2338,7 @@ export class PredictionService {
   async findAll() {
     const res = await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/schedule?api_key=EGlD1j0CeqDo3hcr&leagueId=1572',
+        'http://api.isportsapi.com/sport/football/schedule?api_key=nqt7nbnv0VyRFjJf&leagueId=1572',
       )
       .then((res) => res.data);
 
