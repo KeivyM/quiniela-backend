@@ -54,7 +54,7 @@ export class PredictionService {
     }
   }
 
-  @Cron(CronExpression.EVERY_10_HOURS) // cambiar a EVERY_DAY_AT_MIDNIGHT
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
   async handleCron() {
     // const matches = [
     //   {
@@ -790,8 +790,7 @@ export class PredictionService {
                     match.homeScore &&
                   Number(matchPrediction.results.awayScore) === match.awayScore
                 ) {
-                  //darle 6 puntos por acertar el marcador y resultado
-                  // console.log('6 por marcador Y resultado');
+                  // 6 puntos por marcador Y resultado
 
                   await this.userModel.findByIdAndUpdate(
                     matchPrediction.userId,
@@ -806,7 +805,7 @@ export class PredictionService {
                   Number(matchPrediction.results.homeScore) >
                     Number(matchPrediction.results.awayScore)
                 ) {
-                  // darle 3 puntos por acertar el resultado
+                  // 3 puntos por acertar el resultado
 
                   await this.userModel.findByIdAndUpdate(
                     matchPrediction.userId,

@@ -38,7 +38,7 @@ export class AuthService {
       });
 
       return {
-        ...user,
+        ...user.toJSON(),
         token: this.getJwtToken({ id: user._id.toString() }),
       };
       //generar JWT
@@ -50,14 +50,19 @@ export class AuthService {
   async login(loginUserDto: LoginUserDto) {
     const { password, email } = loginUserDto;
 
-    const user = await this.userModel.findOne({
-      email: email,
-    });
+    const user = await this.userModel
+      .findOne({
+        email: email,
+      })
+      .lean();
 
     if (!user) return 'Correo Incorrecto';
 
     if (!bcrypt.compareSync(password, user.password))
       return 'Contraseña Incorrecta';
+
+    delete user.password;
+
     return {
       ...user,
       token: this.getJwtToken({ id: user._id.toString() }),
@@ -67,7 +72,7 @@ export class AuthService {
 
   async checkAuthStatus(user: User) {
     return {
-      ...user,
+      ...user.toJSON(),
       token: this.getJwtToken({ id: user._id.toString() }),
     };
   }
