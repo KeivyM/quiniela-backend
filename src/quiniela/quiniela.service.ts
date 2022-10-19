@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/auth/entities/user.entity';
@@ -67,16 +67,40 @@ export class QuinielaService {
   async update(user: User, updateQuinielaDto: UpdateQuinielaDto) {
     const userId = user._id.toString();
 
+    const quiniela = await this.quinielaModel.findOne({
+      userId: userId,
+      phase: updateQuinielaDto.phase,
+    });
+
     for (const predictionUpdate of updateQuinielaDto.predictions) {
       const prediction = await this.predictionModel.findOne({
         userId: userId,
         matchId: predictionUpdate.matchId,
       });
 
-      if (prediction) {
-        await this.predictionModel.findByIdAndUpdate(prediction._id, {
-          ...predictionUpdate,
-        });
+      if (!!prediction) {
+        if (prediction) {
+          await this.predictionModel.findByIdAndUpdate(prediction._id, {
+            ...predictionUpdate,
+          });
+        }
+      } else {
+        try {
+          const newPrediction = await this.predictionModel.create({
+            ...predictionUpdate,
+            userId: user._id.toString(),
+          });
+
+          await this.quinielaModel.findByIdAndUpdate(quiniela._id.toString(), {
+            $push: {
+              prediction: newPrediction._id.toString(),
+            },
+          });
+
+          return newPrediction;
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
     return `This action updates a quiniela`;
