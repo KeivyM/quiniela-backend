@@ -94,8 +94,8 @@ export class QuinielaController {
     return this.quinielaService.update(user, updateQuinielaDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.quinielaService.remove(+id);
+  @Post('delete')
+  remove(@Body() body) {
+    return this.quinielaService.remove(body);
   }
 }

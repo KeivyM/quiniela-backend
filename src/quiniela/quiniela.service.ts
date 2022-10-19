@@ -1,7 +1,7 @@
-import { ConsoleLogger, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User } from 'src/auth/entities/user.entity';
+import { User } from '../auth/entities/user.entity';
 import { Prediction } from '../prediction/entities/prediction.entity';
 import { CreateQuinielaDto } from './dto/create-quiniela.dto';
 import { UpdateQuinielaDto } from './dto/update-quiniela.dto';
@@ -12,6 +12,8 @@ export class QuinielaService {
   constructor(
     @InjectModel(Quiniela.name)
     private readonly quinielaModel: Model<Quiniela>,
+    @InjectModel(User.name)
+    private readonly userModel: Model<User>,
     @InjectModel(Prediction.name)
     private readonly predictionModel: Model<Prediction>, // @Inject() // para injectar un servicio
   ) {}
@@ -96,8 +98,6 @@ export class QuinielaService {
               prediction: newPrediction._id.toString(),
             },
           });
-
-          return newPrediction;
         } catch (error) {
           console.log(error);
         }
@@ -106,7 +106,28 @@ export class QuinielaService {
     return `This action updates a quiniela`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} quiniela`;
+  async remove({ userId, phase }) {
+    const quiniela = await this.quinielaModel.find({
+      userId: userId,
+      phase: phase,
+    });
+    if (quiniela?.length === 0) return;
+
+    for (const predictionId of quiniela[0]?.prediction) {
+      await this.predictionModel.findByIdAndRemove(predictionId);
+    }
+
+    await this.quinielaModel.findByIdAndRemove(quiniela[0]?._id);
+    const user = await this.userModel.findById(userId);
+    const newArrayQuinielas = user.quiniela.filter(
+      (quinielaId) => quinielaId !== quiniela[0]?._id.toString(),
+    );
+
+    await this.userModel.findByIdAndUpdate(userId, {
+      $set: {
+        quiniela: newArrayQuinielas,
+      },
+    });
+    return `This action removes a #${phase}, #${userId} quiniela`;
   }
 }

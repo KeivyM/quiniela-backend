@@ -6,6 +6,7 @@ import { Quiniela, QuinielaSchema } from './entities/quiniela.entity';
 // import { PassportModule } from '@nestjs/passport';
 import { PredictionModule } from '../prediction/prediction.module';
 import { AuthModule } from '../auth/auth.module';
+import { User, UserSchema } from '../auth/entities/user.entity';
 import {
   Prediction,
   PredictionSchema,
@@ -21,6 +22,7 @@ import {
     MongooseModule.forFeature([
       { name: Quiniela.name, schema: QuinielaSchema },
       { name: Prediction.name, schema: PredictionSchema },
+      { name: User.name, schema: UserSchema },
     ]),
     // PassportModule.register({ defaultStrategy: 'jwt' }),
   ],

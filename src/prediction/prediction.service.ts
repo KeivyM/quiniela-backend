@@ -48,7 +48,7 @@ export class PredictionService {
         ...createPredictionDto,
         userId: user._id.toString(),
       });
-      // console.log('EN predicction', newPrediction);
+
       return newPrediction;
     } catch (error) {
       console.log(error);
