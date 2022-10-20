@@ -5,7 +5,6 @@ import {
   Body,
   Put,
   Param,
-  Delete,
   UseGuards,
 } from '@nestjs/common';
 import { QuinielaService } from './quiniela.service';
@@ -67,7 +66,6 @@ export class QuinielaController {
 
   @Post('find')
   findQuinielaByPhase(@Body() objeto: FindQuinielaDto) {
-    // console.log(objeto);
     return this.quinielaService.findQuinielaByPhase(
       objeto.userId,
       objeto.phase,

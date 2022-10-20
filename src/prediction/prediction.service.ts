@@ -12,7 +12,6 @@ import { Player } from '../player/entities/player.entity';
 import * as moment from 'moment';
 import 'moment-timezone';
 
-// import { GetUser } from 'src/decorators/get-user.decorator';
 //termina fase de grupos a las 11 am y debo saber despues de cada fase a cuanto tiempo se actualiza la api
 //1670001000 a la 1 pm del mismo dia
 
@@ -57,97 +56,97 @@ export class PredictionService {
 
   @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT) //cambiar
   async handleCron() {
-    const matches = [
-      {
-        matchId: '227058125',
-        leagueId: '1572',
-        matchTime: 1668959940,
-        status: 10,
-        homeName: 'Qatar',
-        awayName: 'Ecuador',
-        homeScore: 14,
-        awayScore: 6,
-      },
-      {
-        matchId: '267058129',
-        leagueId: '1572',
-        matchTime: 1669035600,
-        status: 10,
-        homeName: 'England',
-        awayName: 'Iran',
-        homeScore: 3,
-        awayScore: 2,
-      },
-      {
-        matchId: '237058126',
-        leagueId: '1572',
-        matchTime: 1669046340,
-        status: 10,
-        homeName: 'Senegal',
-        awayName: 'Netherlands',
-        homeScore: 10,
-        awayScore: 11,
-      },
-      {
-        matchId: '393358121',
-        leagueId: '1572',
-        matchTime: 1669057200,
-        status: 10,
-        homeName: 'USA',
-        awayName: 'Wales',
-        homeScore: 9,
-        awayScore: 6,
-      },
-      {
-        matchId: '228058126',
-        leagueId: '1572',
-        matchTime: 1669111200,
-        status: 0,
-        homeName: 'Argentina',
-        awayName: 'Saudi Arabia',
-        homeScore: 0,
-        awayScore: 0,
-      },
-      {
-        matchId: '368058120',
-        leagueId: '1572',
-        matchTime: 1669122000,
-        status: 0,
-        homeName: 'Denmark',
-        awayName: 'Tunisia',
-        homeScore: 0,
-        awayScore: 0,
-      },
-      {
-        matchId: '218058125',
-        leagueId: '1572',
-        matchTime: 1669132740,
-        status: 0,
-        homeName: 'Mexico',
-        awayName: 'Poland',
-        homeScore: 0,
-        awayScore: 0,
-      },
-      {
-        matchId: '205358124',
-        leagueId: '1572',
-        matchTime: 1669143600,
-        status: 0,
-        homeName: 'France',
-        awayName: 'Australia',
-        homeScore: 0,
-        awayScore: 0,
-      },
-    ]; // eliminar data de prueba
+    // const matches = [
+    //   {
+    //     matchId: '227058125',
+    //     leagueId: '1572',
+    //     matchTime: 1668959940,
+    //     status: 10,
+    //     homeName: 'Qatar',
+    //     awayName: 'Ecuador',
+    //     homeScore: 14,
+    //     awayScore: 6,
+    //   },
+    //   {
+    //     matchId: '267058129',
+    //     leagueId: '1572',
+    //     matchTime: 1669035600,
+    //     status: 10,
+    //     homeName: 'England',
+    //     awayName: 'Iran',
+    //     homeScore: 3,
+    //     awayScore: 2,
+    //   },
+    //   {
+    //     matchId: '237058126',
+    //     leagueId: '1572',
+    //     matchTime: 1669046340,
+    //     status: 10,
+    //     homeName: 'Senegal',
+    //     awayName: 'Netherlands',
+    //     homeScore: 10,
+    //     awayScore: 11,
+    //   },
+    //   {
+    //     matchId: '393358121',
+    //     leagueId: '1572',
+    //     matchTime: 1669057200,
+    //     status: 10,
+    //     homeName: 'USA',
+    //     awayName: 'Wales',
+    //     homeScore: 9,
+    //     awayScore: 6,
+    //   },
+    //   {
+    //     matchId: '228058126',
+    //     leagueId: '1572',
+    //     matchTime: 1669111200,
+    //     status: 0,
+    //     homeName: 'Argentina',
+    //     awayName: 'Saudi Arabia',
+    //     homeScore: 0,
+    //     awayScore: 0,
+    //   },
+    //   {
+    //     matchId: '368058120',
+    //     leagueId: '1572',
+    //     matchTime: 1669122000,
+    //     status: 0,
+    //     homeName: 'Denmark',
+    //     awayName: 'Tunisia',
+    //     homeScore: 0,
+    //     awayScore: 0,
+    //   },
+    //   {
+    //     matchId: '218058125',
+    //     leagueId: '1572',
+    //     matchTime: 1669132740,
+    //     status: 0,
+    //     homeName: 'Mexico',
+    //     awayName: 'Poland',
+    //     homeScore: 0,
+    //     awayScore: 0,
+    //   },
+    //   {
+    //     matchId: '205358124',
+    //     leagueId: '1572',
+    //     matchTime: 1669143600,
+    //     status: 0,
+    //     homeName: 'France',
+    //     awayName: 'Australia',
+    //     homeScore: 0,
+    //     awayScore: 0,
+    //   },
+    // ]; // eliminar data de prueba
 
-    // let matches = [];
+    let matches = [];
     let players = [];
 
-    // await this.httpService.axiosRef
-    //   .get(
-    //     'http://api.isportsapi.com/sport/football/schedule?api_key=I8jtvf8X8IFwls69&leagueId=13014',
-    //   )
-    //   .then((res) => (matches = res.data.data)); //cambiar leagueId a 1572 y api_key
+    await this.httpService.axiosRef
+      .get(
+        'http://api.isportsapi.com/sport/football/schedule?api_key=I8jtvf8X8IFwls69&leagueId=13014',
+      )
+      .then((res) => (matches = res.data.data)); //cambiar leagueId a 1572 y api_key
 
     const users = await this.userModel.find();
 
@@ -296,6 +295,7 @@ export class PredictionService {
         }
       }
     }
+
     const playersPredictions = await this.playerModel.find();
 
     if (playersPredictions?.length === 0) return;
@@ -307,7 +307,7 @@ export class PredictionService {
 
     await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/topscorer?api_key=I8jtvf8X8IFwls69&leagueId=13014',
+        'http://api.isportsapi.com/sport/football/topscorer?api_key=n2GEuffuRQ95pCSo&leagueId=13014',
       )
       .then((res) => (players = res.data.data)); //cambiar leagueId a 1572
 
@@ -341,7 +341,7 @@ export class PredictionService {
   async getMatchesFromApi() {
     const res = await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/schedule?api_key=I8jtvf8X8IFwls69&leagueId=1572',
+        'http://api.isportsapi.com/sport/football/schedule?api_key=n2GEuffuRQ95pCSo&leagueId=1572',
       )
       .then((res) => res.data);
 
@@ -352,7 +352,7 @@ export class PredictionService {
     //cambiar leagueId y api_key
     const res = await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/topscorer?api_key=I8jtvf8X8IFwls69&leagueId=13014',
+        'http://api.isportsapi.com/sport/football/topscorer?api_key=n2GEuffuRQ95pCSo&leagueId=13014',
       )
       .then((res) => res.data);
     return res;
