@@ -145,7 +145,7 @@ export class PredictionService {
 
     // await this.httpService.axiosRef
     //   .get(
-    //     'http://api.isportsapi.com/sport/football/schedule?api_key=RvXvrXRdEUeWTyUc&leagueId=13014',
+    //     'http://api.isportsapi.com/sport/football/schedule?api_key=I8jtvf8X8IFwls69&leagueId=13014',
     //   )
     //   .then((res) => (matches = res.data.data)); //cambiar leagueId a 1572 y api_key
 
@@ -307,7 +307,7 @@ export class PredictionService {
 
     await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/topscorer?api_key=RvXvrXRdEUeWTyUc&leagueId=13014',
+        'http://api.isportsapi.com/sport/football/topscorer?api_key=I8jtvf8X8IFwls69&leagueId=13014',
       )
       .then((res) => (players = res.data.data)); //cambiar leagueId a 1572
 
@@ -341,7 +341,7 @@ export class PredictionService {
   async getMatchesFromApi() {
     const res = await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/schedule?api_key=RvXvrXRdEUeWTyUc&leagueId=1572',
+        'http://api.isportsapi.com/sport/football/schedule?api_key=I8jtvf8X8IFwls69&leagueId=1572',
       )
       .then((res) => res.data);
 
@@ -352,7 +352,7 @@ export class PredictionService {
     //cambiar leagueId y api_key
     const res = await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/topscorer?api_key=RvXvrXRdEUeWTyUc&leagueId=13014',
+        'http://api.isportsapi.com/sport/football/topscorer?api_key=I8jtvf8X8IFwls69&leagueId=13014',
       )
       .then((res) => res.data);
     return res;
