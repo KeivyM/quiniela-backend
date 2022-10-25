@@ -56,6 +56,7 @@ export class PredictionService {
 
   @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT) //cambiar
   async handleCron() {
+    // console.log('actulalizando');
     // const matches = [
     //   {
     //     matchId: '227058125',
@@ -139,14 +140,58 @@ export class PredictionService {
     //   },
     // ]; // eliminar data de prueba
 
+    // let players = [
+    //   {
+    //     playerId: '150860',
+    //     playerName: 'Erling Haaland',
+    //     teamId: '26',
+    //     teamName: 'Manchester City',
+    //     country: 'Norway',
+    //     goalsCount: 5,
+    //     homeGoals: 3,
+    //     awayGoals: 2,
+    //     homePenalty: 0,
+    //     awayPenalty: 0,
+    //     matchNum: 3,
+    //     subNum: 0,
+    //   },
+    //   {
+    //     playerId: '100443',
+    //     playerName: 'Mohamed Salah Ghaly',
+    //     teamId: '25',
+    //     teamName: 'Liverpool',
+    //     country: 'Egypt',
+    //     goalsCount: 4,
+    //     homeGoals: 2,
+    //     awayGoals: 3,
+    //     homePenalty: 1,
+    //     awayPenalty: 0,
+    //     matchNum: 4,
+    //     subNum: 1,
+    //   },
+    //   {
+    //     playerId: '60961',
+    //     playerName: 'Robert Lewandowski',
+    //     teamId: '84',
+    //     teamName: 'FC Barcelona',
+    //     country: 'Poland',
+    //     goalsCount: 3,
+    //     homeGoals: 5,
+    //     awayGoals: 0,
+    //     homePenalty: 0,
+    //     awayPenalty: 0,
+    //     matchNum: 4,
+    //     subNum: 0,
+    //   },
+    // ];
     let matches = [];
     let players = [];
 
     await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/schedule?api_key=I8jtvf8X8IFwls69&leagueId=13014',
+        'http://api.isportsapi.com/sport/football/schedule?api_key=I8jtvf8X8IFwls69&leagueId=1572',
       )
-      .then((res) => (matches = res.data.data)); //cambiar leagueId a 1572 y api_key
+      .then((res) => (matches = res.data.data)); //cambiar y api_key
 
     const users = await this.userModel.find();
 
@@ -307,7 +352,7 @@ export class PredictionService {
 
     await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/topscorer?api_key=n2GEuffuRQ95pCSo&leagueId=13014',
+        'http://api.isportsapi.com/sport/football/topscorer?api_key=I8jtvf8X8IFwls69&leagueId=1572',
       )
       .then((res) => (players = res.data.data)); //cambiar leagueId a 1572
 
@@ -341,7 +386,7 @@ export class PredictionService {
   async getMatchesFromApi() {
     const res = await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/schedule?api_key=n2GEuffuRQ95pCSo&leagueId=1572',
+        'http://api.isportsapi.com/sport/football/schedule?api_key=I8jtvf8X8IFwls69&leagueId=1572',
       )
       .then((res) => res.data);
 
@@ -349,12 +394,57 @@ export class PredictionService {
   }
 
   async getPlayersFromApi() {
-    //cambiar leagueId y api_key
+    //cambiar y api_key
     const res = await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/topscorer?api_key=n2GEuffuRQ95pCSo&leagueId=13014',
+        'http://api.isportsapi.com/sport/football/topscorer?api_key=I8jtvf8X8IFwls69&leagueId=1572',
       )
       .then((res) => res.data);
+
+    // let res = [
+    //   {
+    //     playerId: '150860',
+    //     playerName: 'Erling Haaland',
+    //     teamId: '26',
+    //     teamName: 'Manchester City',
+    //     country: 'Norway',
+    //     goalsCount: 5,
+    //     homeGoals: 3,
+    //     awayGoals: 2,
+    //     homePenalty: 0,
+    //     awayPenalty: 0,
+    //     matchNum: 3,
+    //     subNum: 0,
+    //   },
+    //   {
+    //     playerId: '100443',
+    //     playerName: 'Mohamed Salah Ghaly',
+    //     teamId: '25',
+    //     teamName: 'Liverpool',
+    //     country: 'Egypt',
+    //     goalsCount: 4,
+    //     homeGoals: 2,
+    //     awayGoals: 3,
+    //     homePenalty: 1,
+    //     awayPenalty: 0,
+    //     matchNum: 4,
+    //     subNum: 1,
+    //   },
+    //   {
+    //     playerId: '60961',
+    //     playerName: 'Robert Lewandowski',
+    //     teamId: '84',
+    //     teamName: 'FC Barcelona',
+    //     country: 'Poland',
+    //     goalsCount: 3,
+    //     homeGoals: 5,
+    //     awayGoals: 0,
+    //     homePenalty: 0,
+    //     awayPenalty: 0,
+    //     matchNum: 4,
+    //     subNum: 0,
+    //   },
+    // ];
     return res;
   }
 
