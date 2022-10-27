@@ -12,21 +12,6 @@ import { Player } from '../player/entities/player.entity';
 import * as moment from 'moment';
 import 'moment-timezone';
 
-//termina fase de grupos a las 11 am y debo saber despues de cada fase a cuanto tiempo se actualiza la api
-//1670001000 a la 1 pm del mismo dia
-
-//1670079600 hora del primer partido de octavos
-//1670353200 hora del ultimo partido de octavos
-
-//1670598000 hora del primer partido de cuartos
-//1670698800 hora del ultimo partido de cuartos
-
-//1670958000 hora del primer partido de semifinales
-//1671044400 hora del ultimo partido de semifinales
-
-//1671289200 hora del primer partido de final
-//1671375600 hora del ultimo partido de final
-
 @Injectable()
 export class PredictionService {
   constructor(
@@ -50,11 +35,11 @@ export class PredictionService {
 
       return newPrediction;
     } catch (error) {
-      console.log(error);
+      return error;
     }
   }
 
-  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT) //cambiar
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
   async handleCron() {
     // console.log('actulalizando');
     // const matches = [
@@ -191,7 +176,7 @@ export class PredictionService {
       .get(
         'http://api.isportsapi.com/sport/football/schedule?api_key=I8jtvf8X8IFwls69&leagueId=1572',
       )
-      .then((res) => (matches = res.data.data)); //cambiar y api_key
+      .then((res) => (matches = res.data.data));
 
     const users = await this.userModel.find();
 
@@ -354,7 +339,7 @@ export class PredictionService {
       .get(
         'http://api.isportsapi.com/sport/football/topscorer?api_key=I8jtvf8X8IFwls69&leagueId=1572',
       )
-      .then((res) => (players = res.data.data)); //cambiar leagueId a 1572
+      .then((res) => (players = res.data.data));
 
     for (const playerPrediction of playersPredictions) {
       if (playerPrediction.playerName === players[0].playerName) {
@@ -394,57 +379,11 @@ export class PredictionService {
   }
 
   async getPlayersFromApi() {
-    //cambiar y api_key
     const res = await this.httpService.axiosRef
       .get(
         'http://api.isportsapi.com/sport/football/topscorer?api_key=I8jtvf8X8IFwls69&leagueId=1572',
       )
       .then((res) => res.data);
-
-    // let res = [
-    //   {
-    //     playerId: '150860',
-    //     playerName: 'Erling Haaland',
-    //     teamId: '26',
-    //     teamName: 'Manchester City',
-    //     country: 'Norway',
-    //     goalsCount: 5,
-    //     homeGoals: 3,
-    //     awayGoals: 2,
-    //     homePenalty: 0,
-    //     awayPenalty: 0,
-    //     matchNum: 3,
-    //     subNum: 0,
-    //   },
-    //   {
-    //     playerId: '100443',
-    //     playerName: 'Mohamed Salah Ghaly',
-    //     teamId: '25',
-    //     teamName: 'Liverpool',
-    //     country: 'Egypt',
-    //     goalsCount: 4,
-    //     homeGoals: 2,
-    //     awayGoals: 3,
-    //     homePenalty: 1,
-    //     awayPenalty: 0,
-    //     matchNum: 4,
-    //     subNum: 1,
-    //   },
-    //   {
-    //     playerId: '60961',
-    //     playerName: 'Robert Lewandowski',
-    //     teamId: '84',
-    //     teamName: 'FC Barcelona',
-    //     country: 'Poland',
-    //     goalsCount: 3,
-    //     homeGoals: 5,
-    //     awayGoals: 0,
-    //     homePenalty: 0,
-    //     awayPenalty: 0,
-    //     matchNum: 4,
-    //     subNum: 0,
-    //   },
-    // ];
     return res;
   }
 

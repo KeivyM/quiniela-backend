@@ -77,11 +77,6 @@ export class QuinielaController {
     return this.quinielaService.findOne(id);
   }
 
-  // @Get('/types/:id')
-  // test(@Param('id') id: string) {
-  //   return id;
-  // }
-
   @Put(':id')
   @UseGuards(AuthGuard('jwt'))
   update(

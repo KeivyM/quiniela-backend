@@ -7,7 +7,6 @@ import { Model } from 'mongoose';
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { JwtService } from '@nestjs/jwt';
-import { AddIdQuinielaDto } from './dto/add-id-quiniela.dto';
 import { AddPointsDto } from './dto/add-points.dto';
 import { Quiniela } from '../quiniela/entities/quiniela.entity';
 import { Prediction } from '../prediction/entities/prediction.entity';
@@ -41,7 +40,6 @@ export class AuthService {
         ...user.toJSON(),
         token: this.getJwtToken({ id: user._id.toString() }),
       };
-      //generar JWT
     } catch (error) {
       return error;
     }
@@ -113,43 +111,24 @@ export class AuthService {
   }
 
   findOne(id: string) {
-    // console.log(id);
     return this.userModel.findById(id);
   }
-
-  // addQuiniela(id, idQuiniela: AddIdQuinielaDto) {
-  //   // this.userModel.findOneAndUpdate()
-  //   //puedo mostrar el id en consola
-  //   console.log(idQuiniela, id);
-  //   return 'Esto agrega un id de la quiniela creada, en el array del user';
-  // }
-
-  // update(id: number, updateUserDto: UpdateUserDto) {
-  //   return `This action updates a #${id} user`;
-  // }
 
   async remove(id: string, { password }) {
     try {
       const user = await this.userModel.findById(id);
-      console.log(user);
 
-      if (!bcrypt.compareSync(password, user.password))
-        return console.log('contraseña incorrecta');
-      // throw new Error('Contraseña Incorrecta');
+      if (!bcrypt.compareSync(password, user.password)) return;
 
       for (const quiniela of user.quiniela) {
-        console.log(quiniela);
         await this.quinielaModel.findByIdAndDelete(quiniela);
       }
       const predictions = await this.predictionModel.find({ userId: id });
       for (const prediction of predictions) {
-        console.log(prediction);
-
         await this.predictionModel.findByIdAndDelete(prediction._id);
       }
 
       await this.userModel.findByIdAndDelete(user._id);
-      console.log('elliminado');
       //eliminar quinielas relacionadas
       //eliminar predicciones relacionadas
     } catch (error) {

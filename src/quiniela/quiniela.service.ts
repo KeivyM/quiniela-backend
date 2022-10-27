@@ -15,7 +15,7 @@ export class QuinielaService {
     @InjectModel(User.name)
     private readonly userModel: Model<User>,
     @InjectModel(Prediction.name)
-    private readonly predictionModel: Model<Prediction>, // @Inject() // para injectar un servicio
+    private readonly predictionModel: Model<Prediction>,
   ) {}
 
   async create(createQuinielaDto: CreateQuinielaDto, id: string) {
@@ -99,7 +99,7 @@ export class QuinielaService {
             },
           });
         } catch (error) {
-          console.log(error);
+          return error;
         }
       }
     }
