@@ -20,17 +20,12 @@ export class Quiniela extends Document {
     required: true,
     index: true,
   })
-  phase: string; // fase de grupos, octavos de final, cuartos de final, semi-finales, tercer puesto y finals
+  phase: string;
 
   @Prop({
     required: true,
   })
   prediction: [];
-
-  // @Prop({
-  //   required: true,
-  // })
-  // predictions: [];
 }
 
 export const QuinielaSchema = SchemaFactory.createForClass(Quiniela);

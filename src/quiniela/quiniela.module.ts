@@ -3,7 +3,6 @@ import { QuinielaService } from './quiniela.service';
 import { QuinielaController } from './quiniela.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Quiniela, QuinielaSchema } from './entities/quiniela.entity';
-// import { PassportModule } from '@nestjs/passport';
 import { PredictionModule } from '../prediction/prediction.module';
 import { AuthModule } from '../auth/auth.module';
 import { User, UserSchema } from '../auth/entities/user.entity';
@@ -24,7 +23,6 @@ import {
       { name: Prediction.name, schema: PredictionSchema },
       { name: User.name, schema: UserSchema },
     ]),
-    // PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
 })
 export class QuinielaModule {}

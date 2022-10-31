@@ -41,134 +41,6 @@ export class PredictionService {
 
   @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
   async handleCron() {
-    // console.log('actulalizando');
-    // const matches = [
-    //   {
-    //     matchId: '227058125',
-    //     leagueId: '1572',
-    //     matchTime: 1668959940,
-    //     status: 10,
-    //     homeName: 'Qatar',
-    //     awayName: 'Ecuador',
-    //     homeScore: 14,
-    //     awayScore: 6,
-    //   },
-    //   {
-    //     matchId: '267058129',
-    //     leagueId: '1572',
-    //     matchTime: 1669035600,
-    //     status: 10,
-    //     homeName: 'England',
-    //     awayName: 'Iran',
-    //     homeScore: 3,
-    //     awayScore: 2,
-    //   },
-    //   {
-    //     matchId: '237058126',
-    //     leagueId: '1572',
-    //     matchTime: 1669046340,
-    //     status: 10,
-    //     homeName: 'Senegal',
-    //     awayName: 'Netherlands',
-    //     homeScore: 10,
-    //     awayScore: 11,
-    //   },
-    //   {
-    //     matchId: '393358121',
-    //     leagueId: '1572',
-    //     matchTime: 1669057200,
-    //     status: 10,
-    //     homeName: 'USA',
-    //     awayName: 'Wales',
-    //     homeScore: 9,
-    //     awayScore: 6,
-    //   },
-    //   {
-    //     matchId: '228058126',
-    //     leagueId: '1572',
-    //     matchTime: 1669111200,
-    //     status: 0,
-    //     homeName: 'Argentina',
-    //     awayName: 'Saudi Arabia',
-    //     homeScore: 0,
-    //     awayScore: 0,
-    //   },
-    //   {
-    //     matchId: '368058120',
-    //     leagueId: '1572',
-    //     matchTime: 1669122000,
-    //     status: 0,
-    //     homeName: 'Denmark',
-    //     awayName: 'Tunisia',
-    //     homeScore: 0,
-    //     awayScore: 0,
-    //   },
-    //   {
-    //     matchId: '218058125',
-    //     leagueId: '1572',
-    //     matchTime: 1669132740,
-    //     status: 0,
-    //     homeName: 'Mexico',
-    //     awayName: 'Poland',
-    //     homeScore: 0,
-    //     awayScore: 0,
-    //   },
-    //   {
-    //     matchId: '205358124',
-    //     leagueId: '1572',
-    //     matchTime: 1669143600,
-    //     status: 0,
-    //     homeName: 'France',
-    //     awayName: 'Australia',
-    //     homeScore: 0,
-    //     awayScore: 0,
-    //   },
-    // ]; // eliminar data de prueba
-
-    // let players = [
-    //   {
-    //     playerId: '150860',
-    //     playerName: 'Erling Haaland',
-    //     teamId: '26',
-    //     teamName: 'Manchester City',
-    //     country: 'Norway',
-    //     goalsCount: 5,
-    //     homeGoals: 3,
-    //     awayGoals: 2,
-    //     homePenalty: 0,
-    //     awayPenalty: 0,
-    //     matchNum: 3,
-    //     subNum: 0,
-    //   },
-    //   {
-    //     playerId: '100443',
-    //     playerName: 'Mohamed Salah Ghaly',
-    //     teamId: '25',
-    //     teamName: 'Liverpool',
-    //     country: 'Egypt',
-    //     goalsCount: 4,
-    //     homeGoals: 2,
-    //     awayGoals: 3,
-    //     homePenalty: 1,
-    //     awayPenalty: 0,
-    //     matchNum: 4,
-    //     subNum: 1,
-    //   },
-    //   {
-    //     playerId: '60961',
-    //     playerName: 'Robert Lewandowski',
-    //     teamId: '84',
-    //     teamName: 'FC Barcelona',
-    //     country: 'Poland',
-    //     goalsCount: 3,
-    //     homeGoals: 5,
-    //     awayGoals: 0,
-    //     homePenalty: 0,
-    //     awayPenalty: 0,
-    //     matchNum: 4,
-    //     subNum: 0,
-    //   },
-    // ];
     let matches = [];
     let players = [];
 
@@ -205,120 +77,47 @@ export class PredictionService {
 
           for (const matchPrediction of arrayPredictions) {
             if (match.matchId === matchPrediction.matchId) {
-              if (match.matchTime <= 1670007600) {
-                if (
-                  matchPrediction.results.homeScore?.length === 0 ||
-                  matchPrediction.results.awayScore?.length === 0
-                )
-                  continue;
-                if (
-                  Number(matchPrediction.results.homeScore) ===
-                    match.homeScore &&
-                  Number(matchPrediction.results.awayScore) === match.awayScore
-                ) {
-                  // 6 puntos por marcador Y resultado
+              if (
+                matchPrediction.results.homeScore?.length === 0 ||
+                matchPrediction.results.awayScore?.length === 0
+              )
+                continue;
 
-                  await this.userModel.findByIdAndUpdate(
-                    matchPrediction.userId,
-                    {
-                      $inc: {
-                        points: 6,
-                      },
-                    },
-                  );
-                } else if (
-                  match.homeScore > match.awayScore &&
-                  Number(matchPrediction.results.homeScore) >
-                    Number(matchPrediction.results.awayScore)
-                ) {
-                  // 3 puntos por acertar el resultado
+              if (
+                Number(matchPrediction.results.homeScore) === match.homeScore &&
+                Number(matchPrediction.results.awayScore) === match.awayScore
+              ) {
+                // 6 puntos por acertar marcador Y resultado
 
-                  await this.userModel.findByIdAndUpdate(
-                    matchPrediction.userId,
-                    {
-                      $inc: {
-                        points: 3,
-                      },
-                    },
-                  );
-                } else if (
-                  match.homeScore < match.awayScore &&
-                  Number(matchPrediction.results.homeScore) <
-                    Number(matchPrediction.results.awayScore)
-                ) {
-                  await this.userModel.findByIdAndUpdate(
-                    matchPrediction.userId,
-                    {
-                      $inc: {
-                        points: 3,
-                      },
-                    },
-                  );
-                }
-              } else {
-                // console.log('actualizando puntos resto de fases');
+                await this.userModel.findByIdAndUpdate(matchPrediction.userId, {
+                  $inc: {
+                    points: 6,
+                  },
+                });
+              } else if (
+                match.homeScore > match.awayScore &&
+                Number(matchPrediction.results.homeScore) >
+                  Number(matchPrediction.results.awayScore)
+              ) {
+                // 3 puntos por acertar el resultado
 
-                if (
-                  Number(matchPrediction.results.homeScore) ===
-                    match.homeScore &&
-                  Number(matchPrediction.results.awayScore) ===
-                    match.awayScore &&
-                  match.awayScore === match.homeScore
-                ) {
-                  //darle 3 puntos por acertar el marcador
+                await this.userModel.findByIdAndUpdate(matchPrediction.userId, {
+                  $inc: {
+                    points: 3,
+                  },
+                });
+              } else if (
+                match.homeScore < match.awayScore &&
+                Number(matchPrediction.results.homeScore) <
+                  Number(matchPrediction.results.awayScore)
+              ) {
+                // 3 puntos por acertar el resultado
 
-                  await this.userModel.findByIdAndUpdate(
-                    matchPrediction.userId,
-                    {
-                      $inc: {
-                        points: 3,
-                      },
-                    },
-                  );
-                } else if (
-                  Number(matchPrediction.results.homeScore) ===
-                    match.homeScore &&
-                  Number(matchPrediction.results.awayScore) === match.awayScore
-                ) {
-                  //darle 6 puntos por acertar el marcador y resultado
-
-                  await this.userModel.findByIdAndUpdate(
-                    matchPrediction.userId,
-                    {
-                      $inc: {
-                        points: 6,
-                      },
-                    },
-                  );
-                } else if (
-                  match.homeScore > match.awayScore &&
-                  Number(matchPrediction.results.homeScore) >
-                    Number(matchPrediction.results.awayScore)
-                ) {
-                  // darle 3 puntos por acertar el resultado
-
-                  await this.userModel.findByIdAndUpdate(
-                    matchPrediction.userId,
-                    {
-                      $inc: {
-                        points: 3,
-                      },
-                    },
-                  );
-                } else if (
-                  match.homeScore < match.awayScore &&
-                  Number(matchPrediction.results.homeScore) <
-                    Number(matchPrediction.results.awayScore)
-                ) {
-                  await this.userModel.findByIdAndUpdate(
-                    matchPrediction.userId,
-                    {
-                      $inc: {
-                        points: 3,
-                      },
-                    },
-                  );
-                }
+                await this.userModel.findByIdAndUpdate(matchPrediction.userId, {
+                  $inc: {
+                    points: 3,
+                  },
+                });
               }
             }
           }
@@ -343,7 +142,7 @@ export class PredictionService {
 
     for (const playerPrediction of playersPredictions) {
       if (playerPrediction.playerName === players[0].playerName) {
-        //darle 10 puntos por acertar jugador
+        // 10 puntos por acertar jugador
 
         await this.userModel.findByIdAndUpdate(
           playerPrediction.userId.toString(),
@@ -354,7 +153,7 @@ export class PredictionService {
           },
         );
         if (Number(playerPrediction.goals) === Number(players[0].goalsCount)) {
-          //darle 15 puntos por acertar el numero de goles del jugador
+          // 15 puntos por acertar el numero de goles del jugador
           await this.userModel.findByIdAndUpdate(
             playerPrediction.userId.toString(),
             {

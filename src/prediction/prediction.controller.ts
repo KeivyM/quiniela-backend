@@ -42,7 +42,6 @@ export class PredictionController {
   getAllByUserId(@Param('id') id: string) {
     return this.predictionService.getAllByUserId(id);
   }
-  //RUTA PARA OBTENER TODAS LAS PREDICTIONS DE UN USER PARA MOSTRAR LOS DATOS LLENOS AL ENTRAR
 
   @Get(':id')
   findOne(@Param('id') id: string) {

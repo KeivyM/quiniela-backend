@@ -14,7 +14,6 @@ import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/decorators/get-user.decorator';
 import { User } from './entities/user.entity';
-import { RawHeaders } from 'src/decorators/raw-headers.decorator';
 import { IncomingHttpHeaders } from 'http';
 import { AddPointsDto } from './dto/add-points.dto';
 
@@ -43,15 +42,13 @@ export class AuthController {
   testingPrivateRoute(
     @GetUser() user: User,
     @GetUser('email') userEmail: string,
-    // @RawHeaders() rawHeaders: string[],//decorador personalizado que obtiene los headers
-    @Headers() headers: IncomingHttpHeaders, // decorador de nest que obtine los headers
+    @Headers() headers: IncomingHttpHeaders,
   ) {
     return {
       msg: 'Ruta privada',
       user,
       userEmail,
       headers,
-      // rawHeaders,
     };
   }
 
@@ -74,11 +71,6 @@ export class AuthController {
   resetPoints(@Body() body) {
     return this.authService.resetPoints(body);
   }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.usersService.update(+id, updateUserDto);
-  // }
 
   @Post(':id')
   remove(@Param('id') id: string, @Body() passwordUser) {

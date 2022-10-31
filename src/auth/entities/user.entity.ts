@@ -1,5 +1,5 @@
 import { SchemaFactory, Schema, Prop } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
+import { Document } from 'mongoose';
 @Schema()
 export class User extends Document {
   @Prop()
@@ -34,12 +34,6 @@ export class User extends Document {
     required: true,
   })
   password: string;
-
-  // @Prop({
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Quiniela',
-  // })
-  // quiniela: string[];
 
   @Prop()
   quiniela: [];

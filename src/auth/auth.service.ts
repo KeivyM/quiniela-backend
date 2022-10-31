@@ -65,7 +65,6 @@ export class AuthService {
       ...user,
       token: this.getJwtToken({ id: user._id.toString() }),
     };
-    //generar JWT
   }
 
   async checkAuthStatus(user: User) {
@@ -129,8 +128,6 @@ export class AuthService {
       }
 
       await this.userModel.findByIdAndDelete(user._id);
-      //eliminar quinielas relacionadas
-      //eliminar predicciones relacionadas
     } catch (error) {
       return `A user with id "${error.value}" not exits`;
     }

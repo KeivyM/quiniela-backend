@@ -12,21 +12,17 @@ export class Prediction extends Document {
   userId: string;
 
   @Prop({
-    // required: true,
     index: true,
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Quiniela',
   })
   quiniela: Quiniela;
 
-  // @Prop()
-  // quiniela: string;
-
   @Prop({
     required: true,
     index: true,
   })
-  matchId: string; //  verificar si hay un endpoint en la api que obtenga cada partido
+  matchId: string;
 
   @Prop({
     required: true,
