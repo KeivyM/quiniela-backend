@@ -39,6 +39,7 @@ export class QuinielaController {
     );
 
     await this.authService.addQuinielaId(user._id, quiniela._id.toString());
+    console.log(quiniela._id);
 
     createQuinielaDto.predictions.map(async (prediction) => {
       const registration = await this.predictionService.create(
