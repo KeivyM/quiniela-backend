@@ -39,8 +39,9 @@ export class PredictionService {
     }
   }
 
-  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
+  @Cron(CronExpression.EVERY_10_MINUTES)
   async handleCron() {
+    console.log('ejecutando');
     let matches = [];
     let players = [];
 
@@ -51,6 +52,7 @@ export class PredictionService {
       .then((res) => (matches = res.data.data));
 
     const users = await this.userModel.find();
+    console.log('matches:', matches);
 
     for (const user of users) {
       const quinielas = await this.quinielaModel.find({
@@ -88,6 +90,7 @@ export class PredictionService {
                 Number(matchPrediction.results.awayScore) === match.awayScore
               ) {
                 // 6 puntos por acertar marcador Y resultado
+                console.log('6 puntos');
 
                 await this.userModel.findByIdAndUpdate(matchPrediction.userId, {
                   $inc: {
@@ -100,6 +103,7 @@ export class PredictionService {
                   Number(matchPrediction.results.awayScore)
               ) {
                 // 3 puntos por acertar el resultado
+                console.log('3 puntos');
 
                 await this.userModel.findByIdAndUpdate(matchPrediction.userId, {
                   $inc: {
@@ -112,6 +116,7 @@ export class PredictionService {
                   Number(matchPrediction.results.awayScore)
               ) {
                 // 3 puntos por acertar el resultado
+                console.log('3 puntos');
 
                 await this.userModel.findByIdAndUpdate(matchPrediction.userId, {
                   $inc: {
