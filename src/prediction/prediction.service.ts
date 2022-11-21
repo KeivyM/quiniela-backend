@@ -39,9 +39,9 @@ export class PredictionService {
     }
   }
 
-  @Cron(CronExpression.EVERY_10_MINUTES)
+  @Cron(CronExpression.EVERY_6_HOURS)
   async handleCron() {
-    console.log('ejecutando');
+    console.log('ejecutando cada 6 horas');
     let matches = [];
     let players = [];
 
