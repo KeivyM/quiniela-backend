@@ -92,7 +92,7 @@ export class PredictionService {
         );
 
         for (const match of matches) {
-          if (match.status === 0) continue;
+          if (match.status != -1) continue;
 
           for (const matchPrediction of arrayPredictions) {
             if (match.matchId === matchPrediction.matchId) {
