@@ -39,9 +39,27 @@ export class PredictionService {
     }
   }
 
-  @Cron(CronExpression.EVERY_6_HOURS)
-  async handleCron() {
-    console.log('ejecutando cada 6 horas');
+  @Cron('30 12 * * *') //12:30 por la hora del servidor heroku
+  async handleCronSixAM() {
+    this.updatePoints();
+  }
+
+  @Cron('30 15 * * *') //03:30pm
+  async handleCronNineAM() {
+    this.updatePoints();
+  }
+
+  @Cron('30 18 * * *') //06:30pm
+  async handleCronTwelvePM() {
+    this.updatePoints();
+  }
+
+  @Cron('30 20 * * *') //09:30pm
+  async handleCronThreePM() {
+    this.updatePoints();
+  }
+
+  async updatePoints() {
     let matches = [];
     let players = [];
 
@@ -52,7 +70,6 @@ export class PredictionService {
       .then((res) => (matches = res.data.data));
 
     const users = await this.userModel.find();
-    console.log('matches:', matches);
 
     for (const user of users) {
       const quinielas = await this.quinielaModel.find({
@@ -117,6 +134,18 @@ export class PredictionService {
               ) {
                 // 3 puntos por acertar el resultado
                 console.log('3 puntos');
+
+                await this.userModel.findByIdAndUpdate(matchPrediction.userId, {
+                  $inc: {
+                    points: 3,
+                  },
+                });
+              } else if (
+                Number(matchPrediction.results.homeScore) ===
+                  Number(matchPrediction.results.awayScore) &&
+                match.homeScore === match.awayScore
+              ) {
+                // 3 puntos por acertar el resultado que sea empate
 
                 await this.userModel.findByIdAndUpdate(matchPrediction.userId, {
                   $inc: {
