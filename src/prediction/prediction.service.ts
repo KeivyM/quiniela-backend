@@ -57,7 +57,7 @@ export class PredictionService {
     this.updatePoints();
   }
 
-  @Cron('30 20 * * *') //09:30pm
+  @Cron('30 21 * * *') //09:30pm
   async handleCronThreePM() {
     console.log('Actualizando a las 5:30PM');
     this.updatePoints();
