@@ -41,21 +41,25 @@ export class PredictionService {
 
   @Cron('30 12 * * *') //12:30 por la hora del servidor heroku
   async handleCronSixAM() {
+    console.log('Actualizando a las 8:30PM');
     this.updatePoints();
   }
 
   @Cron('30 15 * * *') //03:30pm
   async handleCronNineAM() {
+    console.log('Actualizando a las 11:30PM');
     this.updatePoints();
   }
 
   @Cron('30 18 * * *') //06:30pm
   async handleCronTwelvePM() {
+    console.log('Actualizando a las 2:30PM');
     this.updatePoints();
   }
 
   @Cron('30 20 * * *') //09:30pm
   async handleCronThreePM() {
+    console.log('Actualizando a las 5:30PM');
     this.updatePoints();
   }
 
@@ -107,7 +111,6 @@ export class PredictionService {
                 Number(matchPrediction.results.awayScore) === match.awayScore
               ) {
                 // 6 puntos por acertar marcador Y resultado
-                console.log('6 puntos');
 
                 await this.userModel.findByIdAndUpdate(matchPrediction.userId, {
                   $inc: {
@@ -120,7 +123,6 @@ export class PredictionService {
                   Number(matchPrediction.results.awayScore)
               ) {
                 // 3 puntos por acertar el resultado
-                console.log('3 puntos');
 
                 await this.userModel.findByIdAndUpdate(matchPrediction.userId, {
                   $inc: {
@@ -133,7 +135,6 @@ export class PredictionService {
                   Number(matchPrediction.results.awayScore)
               ) {
                 // 3 puntos por acertar el resultado
-                console.log('3 puntos');
 
                 await this.userModel.findByIdAndUpdate(matchPrediction.userId, {
                   $inc: {
