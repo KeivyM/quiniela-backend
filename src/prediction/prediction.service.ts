@@ -39,21 +39,27 @@ export class PredictionService {
     }
   }
 
-  @Cron('30 12 * * *') //12:30 por la hora del servidor heroku
-  async handleCronSixAM() {
-    console.log('Actualizando a las 8:30AM');
-    this.updatePoints();
-  }
+  // @Cron('30 12 * * *') //12:30 por la hora del servidor heroku
+  // async handleCronSixAM() {
+  //   console.log('Actualizando a las 8:30AM');
+  //   this.updatePoints();
+  // }
 
-  @Cron('30 15 * * *') //03:30pm
-  async handleCronNineAM() {
-    console.log('Actualizando a las 11:30AM');
-    this.updatePoints();
-  }
+  // @Cron('30 15 * * *') //03:30pm
+  // async handleCronNineAM() {
+  //   console.log('Actualizando a las 11:30AM');
+  //   this.updatePoints();
+  // }
 
-  @Cron('30 18 * * *') //06:30pm
-  async handleCronTwelvePM() {
-    console.log('Actualizando a las 2:30PM');
+  // @Cron('30 18 * * *') //06:30pm
+  // async handleCronTwelvePM() {
+  //   console.log('Actualizando a las 2:30PM');
+  //   this.updatePoints();
+  // }
+
+  @Cron('30 17 * * *') //05:30pm
+  async handleCronElevenAM() {
+    console.log('Actualizando a las 1:30PM');
     this.updatePoints();
   }
 
