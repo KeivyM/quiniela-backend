@@ -41,13 +41,13 @@ export class PredictionService {
 
   @Cron('30 12 * * *') //12:30 por la hora del servidor heroku
   async handleCronSixAM() {
-    console.log('Actualizando a las 8:30PM');
+    console.log('Actualizando a las 8:30AM');
     this.updatePoints();
   }
 
   @Cron('30 15 * * *') //03:30pm
   async handleCronNineAM() {
-    console.log('Actualizando a las 11:30PM');
+    console.log('Actualizando a las 11:30AM');
     this.updatePoints();
   }
 
@@ -69,7 +69,7 @@ export class PredictionService {
 
     await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/schedule?api_key=IVx11koARWP6Rb4a&leagueId=1572',
+        'http://api.isportsapi.com/sport/football/schedule?api_key=YbovmuVeXjhXsohg&leagueId=1572',
       )
       .then((res) => (matches = res.data.data));
 
@@ -171,7 +171,7 @@ export class PredictionService {
 
     await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/topscorer?api_key=IVx11koARWP6Rb4a&leagueId=1572',
+        'http://api.isportsapi.com/sport/football/topscorer?api_key=YbovmuVeXjhXsohg&leagueId=1572',
       )
       .then((res) => (players = res.data.data));
 
@@ -205,7 +205,7 @@ export class PredictionService {
   async getMatchesFromApi() {
     const res = await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/schedule?api_key=IVx11koARWP6Rb4a&leagueId=1572',
+        'http://api.isportsapi.com/sport/football/schedule?api_key=YbovmuVeXjhXsohg&leagueId=1572',
       )
       .then((res) => res.data);
 
@@ -215,7 +215,7 @@ export class PredictionService {
   async getPlayersFromApi() {
     const res = await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/topscorer?api_key=IVx11koARWP6Rb4a&leagueId=1572',
+        'http://api.isportsapi.com/sport/football/topscorer?api_key=YbovmuVeXjhXsohg&leagueId=1572',
       )
       .then((res) => res.data);
     return res;
