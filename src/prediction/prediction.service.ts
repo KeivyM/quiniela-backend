@@ -84,17 +84,17 @@ export class PredictionService {
     this.updatePoints();
   }
 
-  @Cron('08 23 * * *') //09:30pm
+  @Cron('25 23 * * *') //09:30pm
   async test() {
-    console.log('Actualizando a las 7:08PM');
-    this.logger.log('Actualizando a las  7:08PM');
+    console.log('Actualizando a las 7:25PM');
+    this.logger.log('Actualizando a las  7:25PM');
     this.updatePoints();
   }
 
-  @Cron('08 19 * * *') //09:30pm
+  @Cron('25 19 * * *') //09:30pm
   async testLocal() {
-    console.log('Actualizando a las 7:08PM hora local');
-    this.logger.log('Actualizando a las  7:08PM hora local');
+    console.log('Actualizando a las 7:25PM hora local');
+    this.logger.log('Actualizando a las  7:25PM hora local');
     this.updatePoints();
   }
 
