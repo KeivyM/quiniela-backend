@@ -1,7 +1,8 @@
 {
   "version": 2,
   "env": {
-    "JWT_SECRET": "mY_sECRET-KeYs"
+    "JWT_SECRET": "mY_sECRET-KeYs",
+    "CLIENT_URL": "https://quiniela-cis.netlify.app"
   },
   "builds": [
     {
