@@ -91,6 +91,13 @@ export class PredictionService {
     this.updatePoints();
   }
 
+  @Cron('08 19 * * *') //09:30pm
+  async testLocal() {
+    console.log('Actualizando a las 7:08PM hora local');
+    this.logger.log('Actualizando a las  7:08PM hora local');
+    this.updatePoints();
+  }
+
   async updatePoints() {
     let matches = [];
     let players = [];
