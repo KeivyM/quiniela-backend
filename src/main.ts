@@ -9,7 +9,6 @@ async function bootstrap() {
 
   app.enableCors({
     origin: configService.get('CLIENT_URL'),
-    methods: ['GET', 'PUT', 'PATCH', 'POST', 'DELETE'],
   });
 
   app.useGlobalPipes(
