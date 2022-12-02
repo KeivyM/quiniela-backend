@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { HttpService } from '@nestjs/axios';
@@ -14,6 +14,7 @@ import 'moment-timezone';
 
 @Injectable()
 export class PredictionService {
+  private logger = new Logger('bootstrap');
   constructor(
     @InjectModel(Prediction.name)
     private readonly predictionModel: Model<Prediction>,
@@ -57,15 +58,36 @@ export class PredictionService {
   //   this.updatePoints();
   // }
 
+  // @Cron('30 17 * * *') //05:30pmm
+  // async handleCronElevenAM() {
+  //   console.log('Actualizando a las 1:30PM');
+  //   this.updatePoints();
+  // }
+
+  // @Cron('30 21 * * *') //09:30pm
+  // async handleCronThreePM() {
+  //   console.log('Actualizando a las 5:30PM');
+  //   this.updatePoints();
+  // }
+
   @Cron('30 17 * * *') //05:30pmm
   async handleCronElevenAM() {
     console.log('Actualizando a las 1:30PM');
+    this.logger.log('Actualizando a las 1:30PM');
     this.updatePoints();
   }
 
   @Cron('30 21 * * *') //09:30pm
   async handleCronThreePM() {
     console.log('Actualizando a las 5:30PM');
+    this.logger.log('Actualizando a las 5:30PM');
+    this.updatePoints();
+  }
+
+  @Cron('08 23 * * *') //09:30pm
+  async test() {
+    console.log('Actualizando a las 7:08PM');
+    this.logger.log('Actualizando a las  7:08PM');
     this.updatePoints();
   }
 
