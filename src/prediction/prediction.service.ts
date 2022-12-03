@@ -84,27 +84,6 @@ export class PredictionService {
     this.updatePoints();
   }
 
-  @Cron('25 23 * * *') //09:30pm
-  async test() {
-    console.log('Actualizando a las 7:25PM');
-    this.logger.log('Actualizando a las  7:25PM');
-    this.updatePoints();
-  }
-
-  @Cron('44 19 * * *') //09:30pm
-  async testLocal() {
-    console.log('Actualizando a las 7:44PM hora local');
-    this.logger.log('Actualizando a las  7:44PM hora local');
-    this.updatePoints();
-  }
-
-  @Cron('44 18 * * *') //09:30pm
-  async testLocalWS() {
-    console.log('Actualizando a las 7:44PM hora local coparada con WS');
-    this.logger.log('Actualizando a las  7:44PM hora local coparada con WS');
-    this.updatePoints();
-  }
-
   async updatePoints() {
     let matches = [];
     let players = [];
