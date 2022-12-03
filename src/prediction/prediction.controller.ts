@@ -48,6 +48,11 @@ export class PredictionController {
     return this.predictionService.findOne(id);
   }
 
+  @Get('updatePoints')
+  updatePoints() {
+    return this.predictionService.updatePoints();
+  }
+
   @Patch(':id')
   update(
     @Param('id') id: string,
