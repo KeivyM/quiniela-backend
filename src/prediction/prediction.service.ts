@@ -110,11 +110,22 @@ export class PredictionService {
       for (let index = 0; index < quinielas.length; index++) {
         const promiseArray = quinielas[index].prediction.map((predictionId) => {
           return this.predictionModel.findById(predictionId);
+          // const prediccion =
+          //   this.predictionModel.findById(predictionId);
+          // if (!prediccion) {
+          // }
+          // return prediccion;
         });
 
         const arrayPredictions = await Promise.all(promiseArray).then(
           (res) => res,
         );
+        // let arrayPredictions = await Promise.all(promiseArray).then(
+        //   (res) => res,
+        // );
+        // arrayPredictions = arrayPredictions.filter(
+        //   (element) => !(element === null),
+        // );
 
         for (const match of matches) {
           if (match.status != -1) continue;
@@ -255,5 +266,40 @@ export class PredictionService {
     const prediction = await this.predictionModel.findById(id);
 
     return `This action updates a #${prediction} prediction  for ${updatePredictionDto}`;
+  }
+
+  async dangerPredictionCleaning(quinielaId: string) {
+    try {
+      const quiniela = await this.quinielaModel.findById(quinielaId);
+
+      let arrayPredictions = [];
+
+      for (const predictionId of quiniela.prediction) {
+        const prediction = await this.predictionModel.findById(predictionId);
+        arrayPredictions.push(prediction);
+      }
+
+      let hash = {};
+
+      for (const predic of arrayPredictions) {
+        if (hash[predic.matchId]) {
+          await this.predictionModel.findByIdAndDelete(predic._id);
+          await this.quinielaModel.findByIdAndUpdate(
+            { _id: quinielaId },
+            {
+              $pull: {
+                prediction: { $eq: predic._id.toString() },
+              },
+            },
+          );
+        } else {
+          hash[predic.matchId] = predic;
+        }
+      }
+
+      return { quiniela };
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

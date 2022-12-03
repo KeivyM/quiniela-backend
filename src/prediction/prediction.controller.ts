@@ -43,14 +43,14 @@ export class PredictionController {
     return this.predictionService.getAllByUserId(id);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.predictionService.findOne(id);
-  }
-
   @Get('updatePoints')
   updatePoints() {
     return this.predictionService.updatePoints();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.predictionService.findOne(id);
   }
 
   @Patch(':id')
@@ -59,5 +59,11 @@ export class PredictionController {
     @Body() updatePredictionDto: UpdatePredictionDto,
   ) {
     return this.predictionService.update(id, updatePredictionDto);
+  }
+
+  //------------------------------------
+  @Patch('dangerPredictionCleaning/:id')
+  deleteRepetidos(@Param('id') idQuiniela: string) {
+    return this.predictionService.dangerPredictionCleaning(idQuiniela);
   }
 }
