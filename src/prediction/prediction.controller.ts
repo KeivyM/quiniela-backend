@@ -5,7 +5,6 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
   UseGuards,
 } from '@nestjs/common';
 import { PredictionService } from './prediction.service';
@@ -53,6 +52,18 @@ export class PredictionController {
     return this.predictionService.findOne(id);
   }
 
+  @Patch('dangerPredictionCleaning/:id')
+  deleteRepetidos(@Param('id') idQuiniela: string) {
+    //limpia la quiniela si tiene predicciones repetidas matchId === matchId
+    return this.predictionService.dangerPredictionCleaning(idQuiniela);
+  }
+
+  @Patch('eliminaLasDeOtrasQuinielas/:id')
+  eliminaLasDeOtrasQuinielas(@Param('id') idQuiniela: string) {
+    //limpia la quiniela si tiene predicciones de otra quiniela (solo sirve para octavos)
+    return this.predictionService.eliminaLasDeOtrasQuinielas(idQuiniela);
+  }
+
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -62,8 +73,4 @@ export class PredictionController {
   }
 
   //------------------------------------
-  @Patch('dangerPredictionCleaning/:id')
-  deleteRepetidos(@Param('id') idQuiniela: string) {
-    return this.predictionService.dangerPredictionCleaning(idQuiniela);
-  }
 }

@@ -302,4 +302,48 @@ export class PredictionService {
       console.log(error);
     }
   }
+
+  async eliminaLasDeOtrasQuinielas(quinielaId: string) {
+    //elimina predicciones de otras fases en la quiniela octavos
+    const octavos = [
+      '101620324',
+      '238620324',
+      '397820321',
+      '387820320',
+      '208820323',
+      '218820324',
+      '228820325',
+      '238820326',
+    ];
+    try {
+      const quiniela = await this.quinielaModel.findById(quinielaId);
+
+      let arrayPredictions = [];
+
+      for (const predictionId of quiniela.prediction) {
+        const prediction = await this.predictionModel.findById(predictionId);
+        arrayPredictions.push(prediction);
+      }
+
+      for (let index = 0; index < arrayPredictions.length; index++) {
+        if (!octavos.includes(arrayPredictions[index].matchId)) {
+          await this.predictionModel.findByIdAndDelete(
+            arrayPredictions[index]._id,
+          );
+          await this.quinielaModel.findByIdAndUpdate(
+            { _id: quinielaId },
+            {
+              $pull: {
+                prediction: { $eq: arrayPredictions[index]._id.toString() },
+              },
+            },
+          );
+        }
+      }
+
+      return { quiniela };
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
