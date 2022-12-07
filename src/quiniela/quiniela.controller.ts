@@ -41,7 +41,19 @@ export class QuinielaController {
     await this.authService.addQuinielaId(user._id, quiniela._id.toString());
     console.log(quiniela._id);
 
-    createQuinielaDto.predictions.map(async (prediction) => {
+    // createQuinielaDto.predictions.map(async (prediction) => {
+    //   const registration = await this.predictionService.create(
+    //     prediction,
+    //     user,
+    //   );
+
+    //   await this.quinielaService.addPredictionId(
+    //     quiniela._id,
+    //     registration._id.toString(),
+    //   );
+    // });
+
+    for (const prediction of createQuinielaDto.predictions) {
       const registration = await this.predictionService.create(
         prediction,
         user,
@@ -51,7 +63,7 @@ export class QuinielaController {
         quiniela._id,
         registration._id.toString(),
       );
-    });
+    }
   }
 
   @Get()
