@@ -90,7 +90,7 @@ export class PredictionService {
 
     await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/schedule?api_key=YbovmuVeXjhXsohg&leagueId=1572',
+        'http://api.isportsapi.com/sport/football/schedule?api_key=fKxbLfXnrNenmcPj&leagueId=1572',
       )
       .then((res) => (matches = res.data.data));
 
@@ -142,7 +142,7 @@ export class PredictionService {
                 Number(matchPrediction.results.homeScore) === match.homeScore &&
                 Number(matchPrediction.results.awayScore) === match.awayScore
               ) {
-                // 6 puntos por acertar marcador Y resultado
+                // 6 puntos por acertar marcador Y resultado predije(3 - 3 | 3 - 4) paso(3 - 3 | 3 - 4)
 
                 await this.userModel.findByIdAndUpdate(matchPrediction.userId, {
                   $inc: {
@@ -154,7 +154,7 @@ export class PredictionService {
                 Number(matchPrediction.results.homeScore) >
                   Number(matchPrediction.results.awayScore)
               ) {
-                // 3 puntos por acertar el resultado
+                // 3 puntos por acertar el resultado predije(3 - 2) paso(3 - 2)
 
                 await this.userModel.findByIdAndUpdate(matchPrediction.userId, {
                   $inc: {
@@ -166,7 +166,7 @@ export class PredictionService {
                 Number(matchPrediction.results.homeScore) <
                   Number(matchPrediction.results.awayScore)
               ) {
-                // 3 puntos por acertar el resultado
+                // 3 puntos por acertar el resultado predije(2 - 3 ) paso(2 - 3)
 
                 await this.userModel.findByIdAndUpdate(matchPrediction.userId, {
                   $inc: {
@@ -178,7 +178,7 @@ export class PredictionService {
                   Number(matchPrediction.results.awayScore) &&
                 match.homeScore === match.awayScore
               ) {
-                // 3 puntos por acertar el resultado que sea empate
+                // 3 puntos por acertar el resultado que sea empate predije(3 - 3) paso(6 - 6)
 
                 await this.userModel.findByIdAndUpdate(matchPrediction.userId, {
                   $inc: {
@@ -203,7 +203,7 @@ export class PredictionService {
 
     await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/topscorer?api_key=YbovmuVeXjhXsohg&leagueId=1572',
+        'http://api.isportsapi.com/sport/football/topscorer?api_key=fKxbLfXnrNenmcPj&leagueId=1572',
       )
       .then((res) => (players = res.data.data));
 
@@ -237,7 +237,7 @@ export class PredictionService {
   async getMatchesFromApi() {
     const res = await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/schedule?api_key=YbovmuVeXjhXsohg&leagueId=1572',
+        'http://api.isportsapi.com/sport/football/schedule?api_key=fKxbLfXnrNenmcPj&leagueId=1572',
       )
       .then((res) => res.data);
 
@@ -247,7 +247,7 @@ export class PredictionService {
   async getPlayersFromApi() {
     const res = await this.httpService.axiosRef
       .get(
-        'http://api.isportsapi.com/sport/football/topscorer?api_key=YbovmuVeXjhXsohg&leagueId=1572',
+        'http://api.isportsapi.com/sport/football/topscorer?api_key=fKxbLfXnrNenmcPj&leagueId=1572',
       )
       .then((res) => res.data);
     return res;
